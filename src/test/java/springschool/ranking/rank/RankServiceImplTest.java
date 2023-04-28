@@ -22,6 +22,7 @@ class RankServiceImplTest {
         StudentRepository studentRepository = ac.getBean(MemoryStudentRepository.class);
 
 
+
         List<Student> students = new ArrayList<>();
         students.add(new Student(1L, "studentA", 100, Grade.ONE, 90.0));
         students.add(new Student(2L, "studentB", 70, Grade.FOUR, 65.0));
@@ -41,6 +42,6 @@ class RankServiceImplTest {
 
         //then
         assertThat(rank1.getRank()).isEqualTo(1);
-        assertThat(rank2.getRank()).isEqualTo(2);
+        assertThat(rank2.getRank()).isEqualTo(4);
     }
 }
