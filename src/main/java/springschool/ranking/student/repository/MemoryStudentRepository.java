@@ -1,6 +1,7 @@
-package springschool.ranking.student;
+package springschool.ranking.student.repository;
 
 import org.springframework.stereotype.Repository;
+import springschool.ranking.student.domain.Student;
 
 import java.util.ArrayList;
 import java.util.HashMap;

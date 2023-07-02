@@ -1,9 +1,7 @@
-package springschool.ranking.rank;
+package springschool.ranking.rank.service;
 
-import springschool.ranking.student.Student;
-
-import java.util.List;
-import java.util.Map;
+import springschool.ranking.rank.Policy;
+import springschool.ranking.student.domain.Student;
 
 public interface RankPolicy {
 

@@ -1,12 +1,14 @@
 package springschool.ranking.student;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import springschool.ranking.AppConfig;
+import springschool.ranking.student.domain.Grade;
+import springschool.ranking.student.domain.Student;
+import springschool.ranking.student.service.StudentService;
+import springschool.ranking.student.service.StudentServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StudentServiceImplTest {
 

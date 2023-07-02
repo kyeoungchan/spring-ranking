@@ -1,9 +1,10 @@
-package springschool.ranking.rank;
+package springschool.ranking.rank.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import springschool.ranking.student.Student;
-import springschool.ranking.student.StudentRepository;
+import springschool.ranking.rank.Policy;
+import springschool.ranking.student.domain.Student;
+import springschool.ranking.student.repository.StudentRepository;
 
 import java.util.*;
 

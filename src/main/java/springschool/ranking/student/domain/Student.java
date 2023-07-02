@@ -1,4 +1,4 @@
-package springschool.ranking.student;
+package springschool.ranking.student.domain;
 
 public class Student {
     private Long id;

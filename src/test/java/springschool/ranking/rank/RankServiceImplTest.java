@@ -1,16 +1,20 @@
 package springschool.ranking.rank;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import springschool.ranking.AppConfig;
-import springschool.ranking.student.*;
+import springschool.ranking.rank.domain.Rank;
+import springschool.ranking.rank.service.RankService;
+import springschool.ranking.rank.service.RankServiceImpl;
+import springschool.ranking.student.domain.Grade;
+import springschool.ranking.student.domain.Student;
+import springschool.ranking.student.repository.MemoryStudentRepository;
+import springschool.ranking.student.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RankServiceImplTest {
 

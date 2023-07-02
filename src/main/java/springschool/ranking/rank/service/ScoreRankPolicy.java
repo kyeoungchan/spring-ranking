@@ -1,22 +1,22 @@
-package springschool.ranking.rank;
+package springschool.ranking.rank.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import springschool.ranking.student.Grade;
-import springschool.ranking.student.Student;
-import springschool.ranking.student.StudentRepository;
+import springschool.ranking.rank.Policy;
+import springschool.ranking.student.domain.Student;
+import springschool.ranking.student.repository.StudentRepository;
 
 import java.util.*;
 
 //@Component
-public class GradeRankPolicy implements RankPolicy{
+public class ScoreRankPolicy implements RankPolicy {
+
     private final StudentRepository studentRepository;
-    private static Map<Long, Grade> store = new HashMap<>();
-    private static List<Map.Entry<Long, Grade>> list = new ArrayList<>();
+    private static Map<Long, Integer> store = new HashMap<>();
+    private static List<Map.Entry<Long, Integer>> list = new ArrayList<>();
 
 
     @Autowired
-    public GradeRankPolicy(StudentRepository studentRepository) {
+    public ScoreRankPolicy(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
@@ -27,12 +27,12 @@ public class GradeRankPolicy implements RankPolicy{
         // Repository로부터 받은 리스트를 store에 담기
         List<Student> tmp = this.studentRepository.findAll();
         for (Student student : tmp) {
-            store.put(student.getId(), student.getGrade());
+            store.put(student.getId(), student.getScore());
         }
 
 
         // store를 ArrayList로 변환한 다음에 Collections.sort() 정렬
-        Set<Map.Entry<Long, Grade>> set = store.entrySet();
+        Set<Map.Entry<Long, Integer>> set = store.entrySet();
         list = new ArrayList<>(set); // ArrayList(Collection c)
 
         // list를 생성하자마자 정렬시켜준다.
@@ -43,7 +43,7 @@ public class GradeRankPolicy implements RankPolicy{
     public void sortRank() {
 
         // static void sort(List list, Comparator c)
-        Collections.sort(list, new GradeRankPolicy.GradeComparator());
+        Collections.sort(list, new ScoreComparator());
     }
 
     @Override
@@ -51,8 +51,8 @@ public class GradeRankPolicy implements RankPolicy{
 
         setList();
 
-        int i=0;
-        for (Map.Entry<Long, Grade> entry : list) {
+        int i = 0;
+        for (Map.Entry<Long, Integer> entry : list) {
             if (entry.getKey() == student.getId()) {
                 break;
             }
@@ -66,40 +66,37 @@ public class GradeRankPolicy implements RankPolicy{
     public void printRankList() {
         setList();
 
-        Iterator<Map.Entry<Long, Grade>> it = list.iterator();
+        Iterator<Map.Entry<Long, Integer>> it = list.iterator();
 
-        System.out.println("= 등급의 크기가 작은 순서로 정렬 =");
+        System.out.println("= 점수의 크기가 큰 순서로 정렬 =");
         while (it.hasNext()) {
-            Map.Entry<Long, Grade> entry = it.next();
+            Map.Entry<Long, Integer> entry = it.next();
             String name = studentRepository.findById(entry.getKey()).getName();
-            Grade grade = entry.getValue();
-            System.out.println(entry.getKey() + " : " + name + " : " + grade);
+            int score = entry.getValue().intValue();
+            System.out.println(entry.getKey() + " : " + name + " : " + score);
         }
         System.out.println();
     }
 
     @Override
     public Policy getPolicy() {
-        return Policy.GRADE;
+        return Policy.SCORE;
     }
 
     /**
-     * Map 자료형을 등급이 작은 사람부터 오름차순을 하기 위한 Comparator 구현
+     * Map 자료형을 점수가 큰 사람부터 내림차순을 하기 위한 Comparator 구현
      */
-    static class GradeComparator implements Comparator {
+    static class ScoreComparator implements Comparator {
         @Override
         public int compare(Object o1, Object o2) {
             if (o1 instanceof Map.Entry<?, ?> && o2 instanceof Map.Entry<?, ?>) {
                 Map.Entry e1 = (Map.Entry) o1;
                 Map.Entry e2 = (Map.Entry) o2;
 
-                Grade g1 = (Grade) e1.getValue();
-                Grade g2 = (Grade) e2.getValue();
+                int v1 = ((Integer) e1.getValue()).intValue();
+                int v2 = ((Integer) e2.getValue()).intValue();
 
-                int v1 = g1.getValue();
-                int v2 = g2.getValue();
-
-                return v1 - v2;
+                return v2 - v1;
             }
             return -1;
         }

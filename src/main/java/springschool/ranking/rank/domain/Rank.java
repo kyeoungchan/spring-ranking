@@ -1,4 +1,6 @@
-package springschool.ranking.rank;
+package springschool.ranking.rank.domain;
+
+import springschool.ranking.rank.Policy;
 
 public class Rank {
     private Long id;
