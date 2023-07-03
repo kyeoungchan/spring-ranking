@@ -23,6 +23,7 @@ public class RateRankPolicy implements RankPolicy {
 
     /**
      * 언제 리포지토리로부터 갱신된 데이터를 받을지 모르므로 매 메서드를 호출할 때마다 setList() 메서드도 호출한다.
+     * 참고로 이 부분은 트랜잭션과 관련된 부분인 거 같은데, 추후에 DB 접근 과제 시 완성할 예정입니다.
      */
     public void setList() {
         // Repository로부터 받은 리스트를 store에 담기
