@@ -1,108 +1,63 @@
 package springschool.ranking.rank.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import springschool.ranking.rank.Policy;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.repository.StudentRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-//@Component
+@Component
+@Slf4j
+@RequiredArgsConstructor
 public class GradeRankPolicy implements RankPolicy{
     private final StudentRepository studentRepository;
-    private static Map<Long, Grade> store = new HashMap<>();
     private static List<Map.Entry<Long, Grade>> list = new ArrayList<>();
 
 
-    @Autowired
-    public GradeRankPolicy(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
-
     /**
-     * 언제 리포지토리로부터 갱신된 데이터를 받을지 모르므로 매 메서드를 호출할 때마다 setList() 메서드도 호출한다.
+     * 등급이 작은 순(숫자 기준)으로 -> 오름차순
      */
-    public void setList() {
-        // Repository로부터 받은 리스트를 store에 담기
-        List<Student> tmp = this.studentRepository.findAll();
-        for (Student student : tmp) {
-            store.put(student.getId(), student.getGrade());
-        }
-
-
-        // store를 ArrayList로 변환한 다음에 Collections.sort() 정렬
-        Set<Map.Entry<Long, Grade>> set = store.entrySet();
-        list = new ArrayList<>(set); // ArrayList(Collection c)
-
-        // list를 생성하자마자 정렬시켜준다.
-        sortRank();
-    }
-
     @Override
     public void sortRank() {
 
-        // static void sort(List list, Comparator c)
-        Collections.sort(list, new GradeRankPolicy.GradeComparator());
+        list = studentRepository.findAll().stream()
+                .collect(Collectors.toMap(Student::getId, Student::getGrade))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toList());
     }
 
     @Override
     public int rank(Student student) {
 
-        setList();
+        sortRank();
 
-        int i=0;
-        for (Map.Entry<Long, Grade> entry : list) {
-            if (entry.getKey() == student.getId()) {
-                break;
-            }
-            i++;
-        }
-
-        return i + 1;
+        return list.stream().map(Map.Entry::getValue) // Entry = [id, grade]
+                .collect(Collectors.toList())
+                .indexOf(student.getGrade()) + 1;
     }
 
     @Override
     public void printRankList() {
-        setList();
 
-        Iterator<Map.Entry<Long, Grade>> it = list.iterator();
+        sortRank();
 
-        System.out.println("= 등급의 크기가 작은 순서로 정렬 =");
-        while (it.hasNext()) {
-            Map.Entry<Long, Grade> entry = it.next();
-            String name = studentRepository.findById(entry.getKey()).getName();
-            Grade grade = entry.getValue();
-            System.out.println(entry.getKey() + " : " + name + " : " + grade);
-        }
-        System.out.println();
+        log.info("=== 등급의 크기가 작은 순서로 정렬 ===");
+
+        // id : name : grade 출력
+        list.stream().map(e -> String.format("%d : %s : %s", e.getKey(),
+                        studentRepository.findById(e.getKey()).getName(), e.getValue()))
+                .forEach(System.out::println);
     }
 
     @Override
     public Policy getPolicy() {
         return Policy.GRADE;
-    }
-
-    /**
-     * Map 자료형을 등급이 작은 사람부터 오름차순을 하기 위한 Comparator 구현
-     */
-    static class GradeComparator implements Comparator {
-        @Override
-        public int compare(Object o1, Object o2) {
-            if (o1 instanceof Map.Entry<?, ?> && o2 instanceof Map.Entry<?, ?>) {
-                Map.Entry e1 = (Map.Entry) o1;
-                Map.Entry e2 = (Map.Entry) o2;
-
-                Grade g1 = (Grade) e1.getValue();
-                Grade g2 = (Grade) e2.getValue();
-
-                int v1 = g1.getValue();
-                int v2 = g2.getValue();
-
-                return v1 - v2;
-            }
-            return -1;
-        }
     }
 
 }

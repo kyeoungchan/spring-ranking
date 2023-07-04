@@ -1,14 +1,12 @@
 package springschool.ranking.rank;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import springschool.ranking.AppConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import springschool.ranking.rank.domain.Rank;
 import springschool.ranking.rank.service.RankService;
-import springschool.ranking.rank.service.RankServiceImpl;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
-import springschool.ranking.student.repository.MemoryStudentRepository;
 import springschool.ranking.student.repository.StudentRepository;
 
 import java.util.ArrayList;
@@ -16,17 +14,17 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 class RankServiceImplTest {
+
+    @Autowired
+    StudentRepository studentRepository;
+    @Autowired
+    RankService rankService;
 
     @Test
     void createRank() {
         //when
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
-        RankService rankService = ac.getBean(RankServiceImpl.class);
-        StudentRepository studentRepository = ac.getBean(MemoryStudentRepository.class);
-
-
-
         List<Student> students = new ArrayList<>();
         students.add(new Student(1L, "studentA", 100, Grade.ONE, 90.0));
         students.add(new Student(2L, "studentB", 70, Grade.FOUR, 65.0));
