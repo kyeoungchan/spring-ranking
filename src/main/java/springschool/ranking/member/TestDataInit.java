@@ -2,7 +2,7 @@ package springschool.ranking.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import springschool.ranking.exception.DuplicatedException;
+import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
 

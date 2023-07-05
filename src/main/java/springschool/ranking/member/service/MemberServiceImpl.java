@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.domain.MemberUpdateDto;
-import springschool.ranking.exception.DuplicatedException;
+import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.member.repository.MemberRepository;
 
 @Service
@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository repository;
 
     @Override
-    public void register(Member member) throws DuplicatedException {
+    public void register(Member member) {
         repository.save(member);
     }
 

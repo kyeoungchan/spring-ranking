@@ -2,7 +2,7 @@ package springschool.ranking.member.repository;
 
 import org.springframework.stereotype.Repository;
 import springschool.ranking.member.domain.Member;
-import springschool.ranking.exception.DuplicatedException;
+import springschool.ranking.exception.repository.DuplicatedException;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +18,7 @@ public class MemoryMemberRepository implements MemberRepository{
      * Service에서 구현해도 되지만, DB에 unique 옵션을 설정하는 것을 고려했을 때, 리포지토리에서 구현하는 것이 맞는 것으로 판단된다.
      */
     @Override
-    public void save(Member member) throws DuplicatedException {
+    public void save(Member member) {
 
         boolean isDuplicated = findByUserId(member.getUserId()).isPresent();
         if (!isDuplicated) {

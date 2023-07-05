@@ -1,18 +1,16 @@
 package springschool.ranking.member.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import springschool.ranking.exception.DuplicatedException;
+import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.domain.MemberUpdateDto;
 import springschool.ranking.member.repository.MemberRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j

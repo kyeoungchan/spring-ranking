@@ -2,11 +2,10 @@ package springschool.ranking.member.service;
 
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.domain.MemberUpdateDto;
-import springschool.ranking.exception.DuplicatedException;
 
 public interface MemberService {
 
-    void register(Member member) throws DuplicatedException;
+    void register(Member member);
 
     Member findMember(Long memberId);
 

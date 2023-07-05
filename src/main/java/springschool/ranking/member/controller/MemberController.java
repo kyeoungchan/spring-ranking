@@ -6,7 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springschool.ranking.SessionConst;
-import springschool.ranking.exception.DuplicatedException;
+import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.exception.UnValidatedException;
 import springschool.ranking.member.domain.*;
 import springschool.ranking.member.service.MemberService;
@@ -76,7 +76,7 @@ public class MemberController {
      * @throws DuplicatedException  회원가입하려는 데 이미 DB에 같은 userId가 있을 경우 예외를 날린다.
      */
     @PostMapping("/register/v1")
-    public MemberDto registerV1(@Validated @RequestBody MemberSaveDto memberSaveDto, BindingResult bindingResult) throws UnValidatedException, DuplicatedException {
+    public MemberDto registerV1(@Validated @RequestBody MemberSaveDto memberSaveDto, BindingResult bindingResult) throws UnValidatedException {
 
         log.info("회원가입 컨트롤러 호출");
 
@@ -88,7 +88,13 @@ public class MemberController {
         registerMember.setUserId(memberSaveDto.getUserId());
         registerMember.setPassword(memberSaveDto.getPassword());
         registerMember.setName(memberSaveDto.getName());
-        memberService.register(registerMember);
+
+        try {
+            memberService.register(registerMember);
+        } catch (DuplicatedException e) {
+            // 중복 회원에 대한 처리 로직...
+            throw new DuplicatedException(e);
+        }
 
         log.info("성공 로직 실행");
         return new MemberDto(registerMember.getId(), memberSaveDto.getName());

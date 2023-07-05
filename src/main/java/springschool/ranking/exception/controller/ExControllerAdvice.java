@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import springschool.ranking.exception.UnValidatedException;
 import springschool.ranking.exception.domain.ErrorResult;
-import springschool.ranking.exception.DuplicatedException;
+import springschool.ranking.exception.repository.DBException;
+import springschool.ranking.exception.repository.DuplicatedException;
 
 @Slf4j
 @RestControllerAdvice
@@ -17,6 +18,13 @@ public class ExControllerAdvice {
     public ErrorResult duplicateExHandler(DuplicatedException e) {
         log.error("[exceptionHandler] ex", e);
         return new ErrorResult("BAD", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DuplicatedException.class)
+    public ErrorResult dbExHandler(DBException e) {
+        log.error("[exceptionHandler] ex", e);
+        return new ErrorResult("DB_ERROR", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
