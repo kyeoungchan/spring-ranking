@@ -19,7 +19,6 @@ public class TestDataInit {
     @PostConstruct
     public void init() throws DuplicatedException {
         Member member = new Member();
-        member.setId(1L);
         member.setUserId("test");
         member.setPassword("test!");
         member.setName("테스트맨");

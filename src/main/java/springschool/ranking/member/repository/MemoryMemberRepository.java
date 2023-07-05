@@ -5,11 +5,13 @@ import springschool.ranking.member.domain.Member;
 import springschool.ranking.exception.DuplicatedException;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class MemoryMemberRepository implements MemberRepository{
 
-    private static Map<Long, Member> store = new HashMap<>();
+    private static Map<Long, Member> store = new ConcurrentHashMap<>();
+    private static long sequence = 0L;
 
     /**
      * userId도 유일해야한다.
@@ -20,6 +22,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
         boolean isDuplicated = findByUserId(member.getUserId()).isPresent();
         if (!isDuplicated) {
+            member.setId(++sequence);
             store.put(member.getId(), member);
         } else {
             throw new DuplicatedException("중복된 userId입니다.");

@@ -36,8 +36,9 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Member edit(Long memberId, MemberUpdateDto updateDto) {
         Member updatedMember = repository.findById(memberId);
-        updatedMember.setName(updatedMember.getName());
-        updatedMember.setPassword(updatedMember.getPassword());
+        updatedMember.setName(updateDto.getName());
+        updatedMember.setPassword(updateDto.getPassword());
+
         return updatedMember;
     }
 
