@@ -31,20 +31,24 @@ public class MemberController {
      * @throws UnValidatedException 로그인 입력 검증 결과 문제가 있을 경우 예외를 날린다.
      */
     @PostMapping("/login/v1")
-    public MemberDto loginV1(@Validated @RequestBody MemberLoginDto memberLoginDto, BindingResult bindingResult,
+    public Object loginV1(@Validated @RequestBody MemberLoginDto memberLoginDto, BindingResult bindingResult,
                              HttpServletRequest request) {
 
         log.info("로그인 컨트롤러 호출");
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || memberLoginDto == null) {
             throw new UnValidatedException("로그인 검증에 실패하였습니다.");
         }
 
-        log.info("성공 로직 실행");
         String userId = memberLoginDto.getUserId();
         String password = memberLoginDto.getPassword();
         Member loginMember = memberService.login(userId, password);
 
+        if (loginMember == null) {
+            return new ErrorResult("UNCORRECT_MEMBER", "아이디 또는 비밀번호가 맞지 않습니다.");
+        }
+
+        log.info("성공 로직 실행");
         // 세션 처리
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
