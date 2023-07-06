@@ -1,5 +1,6 @@
 package springschool.ranking.rank;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,11 @@ class RankServiceImplTest {
     @Autowired
     RankService rankService;
 
+    @BeforeEach
+    void beforeEach() {
+        studentRepository.clearStore();
+    }
+
     @Test
     void createRank() {
         //when
@@ -36,10 +42,9 @@ class RankServiceImplTest {
             studentRepository.save(student);
         }
 
-
         //given
-        Rank rank1 = rankService.createRank(1L);
-        Rank rank2 = rankService.createRank(2L);
+        Rank rank1 = rankService.createRank(students.get(0).getId());
+        Rank rank2 = rankService.createRank(students.get(1).getId());
 
         //then
         assertThat(rank1.getRank()).isEqualTo(1);
