@@ -11,10 +11,12 @@ import java.util.Map;
 @Repository
 public class MemoryStudentRepository implements StudentRepository{
     private static Map<Long, Student> store = new HashMap<>();
+    private static long sequence = 0L;
 
 
     @Override
     public void save(Student student) {
+        student.setId(++sequence);
         store.put(student.getId(), student);
     }
 
@@ -26,5 +28,10 @@ public class MemoryStudentRepository implements StudentRepository{
     @Override
     public List<Student> findAll() {
         return new ArrayList<>(store.values());
+    }
+
+    @Override
+    public void clearStore() {
+        store.clear();
     }
 }

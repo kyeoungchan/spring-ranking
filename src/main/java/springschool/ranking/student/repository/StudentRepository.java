@@ -10,4 +10,6 @@ public interface StudentRepository {
     Student findById(Long studentId);
 
     List<Student> findAll();
+
+    void clearStore();
 }

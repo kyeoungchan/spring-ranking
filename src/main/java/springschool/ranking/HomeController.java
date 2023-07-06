@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/api")
 public class HomeController {
 
-//    @GetMapping
+//    @GetMapping("/v1")
     public MemberDto homeV1(HttpServletRequest request) {
         log.info("home controller");
         HttpSession session = request.getSession(false);
@@ -33,7 +33,7 @@ public class HomeController {
         return new MemberDto(loginMember.getId(), loginMember.getName());
     }
 
-    @GetMapping
+    @GetMapping("/v1")
     public MemberDto homeV1Spring(@SessionAttribute(name = SessionConst.LOGIN_MEMBER,required = false) Member loginMember) {
 
         // 세션은 있는데 회원에 관한 게 아니면
@@ -43,4 +43,5 @@ public class HomeController {
 
         return new MemberDto(loginMember.getId(), loginMember.getName());
     }
+
 }

@@ -21,7 +21,7 @@ public class ExControllerAdvice {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(DuplicatedException.class)
+    @ExceptionHandler(DBException.class)
     public ErrorResult dbExHandler(DBException e) {
         log.error("[exceptionHandler] ex", e);
         return new ErrorResult("DB_ERROR", e.getMessage());

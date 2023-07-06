@@ -1,4 +1,4 @@
-package springschool.ranking.member;
+package springschool.ranking;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class TestDataInit {
      * 테스트용 데이터 추가
      */
     @PostConstruct
-    public void init() throws DuplicatedException {
+    public void init() {
         Member member = new Member();
         member.setUserId("test");
         member.setPassword("test!");

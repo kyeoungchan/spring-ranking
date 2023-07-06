@@ -1,6 +1,7 @@
 package springschool.ranking.member.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,11 @@ class MemberServiceImplTest {
     MemberRepository memberRepository;
     @Autowired
     MemberService memberService;
+
+    @AfterEach
+    void clearStore() {
+        memberRepository.clearStore();
+    }
 
     @Test
     void registerFind() throws DuplicatedException {

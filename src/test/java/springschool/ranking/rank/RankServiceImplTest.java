@@ -26,16 +26,15 @@ class RankServiceImplTest {
     void createRank() {
         //when
         List<Student> students = new ArrayList<>();
-        students.add(new Student(1L, "studentA", 100, Grade.ONE, 90.0));
-        students.add(new Student(2L, "studentB", 70, Grade.FOUR, 65.0));
-        students.add(new Student(3L, "studentC", 86, Grade.TWO, 85.0));
-        students.add(new Student(4L, "studentD", 40, Grade.SIX, 20.0));
-        students.add(new Student(5L, "studentE", 75, Grade.THREE, 70.0));
+        students.add(new Student("studentA", 100, Grade.ONE, 90.0));
+        students.add(new Student( "studentB", 70, Grade.FOUR, 65.0));
+        students.add(new Student( "studentC", 86, Grade.TWO, 85.0));
+        students.add(new Student("studentD", 40, Grade.SIX, 20.0));
+        students.add(new Student( "studentE", 75, Grade.THREE, 70.0));
 
         for (Student student : students) {
             studentRepository.save(student);
         }
-
 
 
         //given

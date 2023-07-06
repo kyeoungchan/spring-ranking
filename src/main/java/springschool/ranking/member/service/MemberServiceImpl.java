@@ -4,23 +4,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.domain.MemberUpdateDto;
-import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.member.repository.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 
-    private final MemberRepository repository;
+    private final MemberRepository memberRepository;
 
     @Override
     public void register(Member member) {
-        repository.save(member);
+        memberRepository.save(member);
     }
 
     @Override
     public Member findMember(Long memberId) {
-        return repository.findById(memberId);
+        return memberRepository.findById(memberId);
     }
 
     /**
@@ -28,14 +27,14 @@ public class MemberServiceImpl implements MemberService{
      */
     @Override
     public Member login(String userId, String password) {
-        return repository.findByUserId(userId)
+        return memberRepository.findByUserId(userId)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
     }
 
     @Override
     public Member edit(Long memberId, MemberUpdateDto updateDto) {
-        Member updatedMember = repository.findById(memberId);
+        Member updatedMember = memberRepository.findById(memberId);
         updatedMember.setName(updateDto.getName());
         updatedMember.setPassword(updateDto.getPassword());
 

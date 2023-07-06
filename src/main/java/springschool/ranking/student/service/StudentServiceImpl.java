@@ -3,6 +3,7 @@ package springschool.ranking.student.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springschool.ranking.student.domain.Student;
+import springschool.ranking.student.domain.StudentUpdateDto;
 import springschool.ranking.student.repository.StudentRepository;
 
 @Service
@@ -18,6 +19,18 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public void register(Student student) {
         studentRepository.save(student);
+    }
+
+    @Override
+    public Student edit(Long studentId, StudentUpdateDto updateDto) {
+
+        Student updatedMember = studentRepository.findById(studentId);
+        updatedMember.setName(updateDto.getName());
+        updatedMember.setScore(updateDto.getScore());
+        updatedMember.setGrade(updateDto.getGrade());
+        updatedMember.setRate(updateDto.getRate());
+
+        return updatedMember;
     }
 
     @Override
