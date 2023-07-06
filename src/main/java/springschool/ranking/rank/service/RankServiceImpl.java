@@ -1,19 +1,20 @@
 package springschool.ranking.rank.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springschool.ranking.rank.domain.Rank;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.repository.StudentRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class RankServiceImpl implements RankService {
 
     private final StudentRepository studentRepository;
-    private final RankPolicy rankPolicy;
+    private final RankPolicyService rankPolicy;
 
-    @Autowired
-    public RankServiceImpl(StudentRepository studentRepository, RankPolicy rankPolicy) {
+    public RankServiceImpl(StudentRepository studentRepository, RankPolicyService rankPolicy) {
         this.studentRepository = studentRepository;
         this.rankPolicy = rankPolicy;
     }
@@ -28,5 +29,15 @@ public class RankServiceImpl implements RankService {
         Rank rank = new Rank(student.getId(), student.getName(), rankPolicy.getPolicy(), rankPolicy.rank(student));
 
         return rank;
+    }
+
+    @Override
+    public List<Rank> getRankList() {
+        List<Student> sortedStudents = rankPolicy.getSortedList();
+        ArrayList<Rank> rankList = new ArrayList<>();
+        for (Student student : sortedStudents) {
+            rankList.add(createRank(student.getId()));
+        }
+        return rankList;
     }
 }

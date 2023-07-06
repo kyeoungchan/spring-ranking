@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springschool.ranking.SessionConst;
+import springschool.ranking.exception.domain.ErrorResult;
 import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.exception.UnValidatedException;
 import springschool.ranking.member.domain.*;
@@ -31,7 +32,7 @@ public class MemberController {
      */
     @PostMapping("/login/v1")
     public MemberDto loginV1(@Validated @RequestBody MemberLoginDto memberLoginDto, BindingResult bindingResult,
-                             HttpServletRequest request) throws UnValidatedException {
+                             HttpServletRequest request) {
 
         log.info("로그인 컨트롤러 호출");
 
@@ -76,7 +77,7 @@ public class MemberController {
      * @throws DuplicatedException  회원가입하려는 데 이미 DB에 같은 userId가 있을 경우 예외를 날린다.
      */
     @PostMapping("/register/v1")
-    public MemberDto registerV1(@Validated @RequestBody MemberSaveDto memberSaveDto, BindingResult bindingResult) throws UnValidatedException {
+    public Object registerV1(@Validated @RequestBody MemberSaveDto memberSaveDto, BindingResult bindingResult) {
 
         log.info("회원가입 컨트롤러 호출");
 
@@ -92,23 +93,24 @@ public class MemberController {
         try {
             memberService.register(registerMember);
         } catch (DuplicatedException e) {
-            // 중복 회원에 대한 처리 로직...
-            throw new DuplicatedException(e);
+            log.error("[register Controller] ex", e);
+            // 중복 id에 대한 예외 처리
+            return new ErrorResult("DUPLICATED_ID_ERROR", e.getMessage());
         }
 
-        log.info("성공 로직 실행");
+        log.info("회원가입 성공 로직 실행");
         return new MemberDto(registerMember.getId(), memberSaveDto.getName());
     }
 
     @PostMapping("/{memberId}/edit/v1")
-    public MemberDto updateV1(@PathVariable Long memberId, @Validated @RequestBody MemberUpdateDto memberUpdateDto, BindingResult bindingResult) throws UnValidatedException {
+    public MemberDto updateV1(@PathVariable Long memberId, @Validated @RequestBody MemberUpdateDto memberUpdateDto, BindingResult bindingResult) {
         log.info("회원수정 컨트롤러 호출");
 
         if (bindingResult.hasErrors()) {
             throw new UnValidatedException("회원가입 검증에 실패하였습니다.");
         }
 
-        log.info("성공 로직 실행");
+        log.info("회원수정 성공 로직 실행");
         Member updatedMember = memberService.edit(memberId, memberUpdateDto);
         return new MemberDto(updatedMember.getId(), updatedMember.getName());
     }

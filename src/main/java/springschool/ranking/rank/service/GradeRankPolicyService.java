@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class GradeRankPolicy implements RankPolicy{
+public class GradeRankPolicyService implements RankPolicyService {
     private final StudentRepository studentRepository;
     private static List<Map.Entry<Long, Grade>> list = new ArrayList<>();
 
@@ -53,6 +53,12 @@ public class GradeRankPolicy implements RankPolicy{
         list.stream().map(e -> String.format("%d : %s : %s", e.getKey(),
                         studentRepository.findById(e.getKey()).getName(), e.getValue()))
                 .forEach(System.out::println);
+    }
+
+    @Override
+    public List<Student> getSortedList() {
+        sortRank();
+        return list.stream().map(e -> studentRepository.findById(e.getKey())).collect(Collectors.toList());
     }
 
     @Override

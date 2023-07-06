@@ -6,6 +6,8 @@ import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.domain.StudentUpdateDto;
 import springschool.ranking.student.repository.StudentRepository;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService{
 
@@ -36,5 +38,10 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student findStudent(Long studentId) {
         return studentRepository.findById(studentId);
+    }
+
+    @Override
+    public List<Student> findStudentList() {
+        return studentRepository.findAll();
     }
 }
