@@ -1,7 +1,8 @@
-package springschool.ranking;
+package springschool.ranking.configuration;
 
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import springschool.ranking.LoginCheckInterceptor;
 
 public class WebConfig implements WebMvcConfigurer {
     @Override

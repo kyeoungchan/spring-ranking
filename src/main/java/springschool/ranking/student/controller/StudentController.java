@@ -5,11 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import springschool.ranking.exception.UnValidatedException;
-import springschool.ranking.student.domain.Student;
-import springschool.ranking.student.domain.StudentAddDto;
-import springschool.ranking.student.domain.StudentDto;
-import springschool.ranking.student.domain.StudentUpdateDto;
+import springschool.ranking.exception.repository.UnValidatedException;
+import springschool.ranking.student.domain.*;
 import springschool.ranking.student.service.StudentService;
 
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class StudentController {
         }
 
         log.info("학생등록 성공 로직 실행");
-        Student registerStudent = new Student(addDto.getName(), addDto.getScore(), addDto.getGrade(), addDto.getRate());
+        Student registerStudent = new Student(addDto.getName(), addDto.getScore(), Grade.valueOf(addDto.getGrade()), addDto.getRate());
         studentService.register(registerStudent);
         return new StudentDto(registerStudent.getId(), registerStudent.getName());
     }

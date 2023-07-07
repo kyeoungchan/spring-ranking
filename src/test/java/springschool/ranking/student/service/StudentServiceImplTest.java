@@ -4,14 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import springschool.ranking.AppConfig;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.domain.StudentUpdateDto;
 import springschool.ranking.student.repository.StudentRepository;
-import springschool.ranking.student.service.StudentService;
-import springschool.ranking.student.service.StudentServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

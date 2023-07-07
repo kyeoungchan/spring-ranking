@@ -1,6 +1,6 @@
 package springschool.ranking.exception.repository;
 
-public class DuplicatedException extends RuntimeException {
+public class DuplicatedException extends DBException {
 
     public DuplicatedException() {
     }

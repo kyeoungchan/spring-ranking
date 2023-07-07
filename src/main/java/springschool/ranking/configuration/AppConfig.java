@@ -1,4 +1,4 @@
-package springschool.ranking;
+package springschool.ranking.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

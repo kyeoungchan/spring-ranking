@@ -3,17 +3,19 @@ package springschool.ranking.member.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springschool.ranking.SessionConst;
 import springschool.ranking.exception.domain.ErrorResult;
 import springschool.ranking.exception.repository.DuplicatedException;
-import springschool.ranking.exception.UnValidatedException;
+import springschool.ranking.exception.repository.UnValidatedException;
 import springschool.ranking.member.domain.*;
 import springschool.ranking.member.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -37,7 +39,8 @@ public class MemberController {
         log.info("로그인 컨트롤러 호출");
 
         if (bindingResult.hasErrors() || memberLoginDto == null) {
-            throw new UnValidatedException("로그인 검증에 실패하였습니다.");
+            String message = getErrorMessages(bindingResult);
+            throw new UnValidatedException("로그인 검증에 실패하였습니다. " + message);
         }
 
         String userId = memberLoginDto.getUserId();
@@ -86,7 +89,8 @@ public class MemberController {
         log.info("회원가입 컨트롤러 호출");
 
         if (bindingResult.hasErrors()) {
-            throw new UnValidatedException("회원가입 검증에 실패하였습니다.");
+            String message = getErrorMessages(bindingResult);
+            throw new UnValidatedException("회원가입 검증에 실패하였습니다." + message);
         }
 
         Member registerMember = new Member();
@@ -106,12 +110,22 @@ public class MemberController {
         return new MemberDto(registerMember.getId(), memberSaveDto.getName());
     }
 
+    private static String getErrorMessages(BindingResult bindingResult) {
+        List<ObjectError> allErrors = bindingResult.getAllErrors();
+        String message = "";
+        for (ObjectError error : allErrors) {
+            message += ", " + error.getDefaultMessage();
+        }
+        return message;
+    }
+
     @PostMapping("/{memberId}/edit/v1")
     public MemberDto updateV1(@PathVariable Long memberId, @Validated @RequestBody MemberUpdateDto memberUpdateDto, BindingResult bindingResult) {
         log.info("회원수정 컨트롤러 호출");
 
         if (bindingResult.hasErrors()) {
-            throw new UnValidatedException("회원가입 검증에 실패하였습니다.");
+            String message = getErrorMessages(bindingResult);
+            throw new UnValidatedException("회원수정 검증에 실패하였습니다. " + message);
         }
 
         log.info("회원수정 성공 로직 실행");

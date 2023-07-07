@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import springschool.ranking.exception.UnValidatedException;
+import springschool.ranking.exception.repository.UnValidatedException;
 import springschool.ranking.exception.domain.ErrorResult;
 import springschool.ranking.exception.repository.DBException;
 import springschool.ranking.exception.repository.DuplicatedException;
