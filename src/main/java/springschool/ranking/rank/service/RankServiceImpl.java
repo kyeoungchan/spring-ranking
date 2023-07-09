@@ -1,5 +1,6 @@
 package springschool.ranking.rank.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import springschool.ranking.rank.domain.Rank;
 import springschool.ranking.student.domain.Student;
@@ -9,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RankServiceImpl implements RankService {
 
     private final StudentRepository studentRepository;
     private final RankPolicyService rankPolicy;
 
-    public RankServiceImpl(StudentRepository studentRepository, RankPolicyService rankPolicy) {
-        this.studentRepository = studentRepository;
-        this.rankPolicy = rankPolicy;
-    }
-
+    /**
+     * @param id 해당 학생의 id가 주어진다.
+     * @return Rank 객체를 반환해준다.
+     */
     @Override
     public Rank createRank(Long id) {
 
@@ -31,6 +32,10 @@ public class RankServiceImpl implements RankService {
         return rank;
     }
 
+    /**
+     * 정책에 맞춰 학생들을 정렬시킨 후 Rank 객체에 매핑시켜서 리스트를 반환한다.
+     * @return
+     */
     @Override
     public List<Rank> getRankList() {
         List<Student> sortedStudents = rankPolicy.getSortedList();

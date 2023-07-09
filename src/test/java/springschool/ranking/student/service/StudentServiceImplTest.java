@@ -46,7 +46,7 @@ class StudentServiceImplTest {
         studentRepository.save(studentA);
 
         // when
-        StudentUpdateDto studentAUpdate = new StudentUpdateDto("studentB", 90, Grade.TWO, 98.5);
+        StudentUpdateDto studentAUpdate = new StudentUpdateDto("studentB", 90, "TWO", 98.5);
         Student updatedStudent = studentService.edit(studentA.getId(), studentAUpdate);
 
         // then

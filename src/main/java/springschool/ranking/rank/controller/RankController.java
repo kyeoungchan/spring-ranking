@@ -21,13 +21,18 @@ public class RankController {
 
     private final RankService rankService;
 
+    /**
+     * @return 학생 한 명의 석차를 담은 객체를 반환한다.
+     */
     @GetMapping("/{studentId}/v1")
     RankDto aStudentRankV1(@PathVariable Long studentId) {
-
         Rank rank = rankService.createRank(studentId);
         return new RankDto(studentId, rank.getName(), rank.getRank());
     }
 
+    /**
+     * @return 전체 학생들의 석차를 담은 객체 리스트를 반환한다.
+     */
     @GetMapping("/rankList/v1")
     List<RankDto> studentRankListV1() {
         List<Rank> rankList = rankService.getRankList();

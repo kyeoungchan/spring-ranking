@@ -11,11 +11,11 @@ public class MemberSaveDto {
     @NotBlank
     private String userId;
 
-    @NotBlank
-    @Size(min = 8, message = "8글자 이상이어야합니다.")
+    @NotBlank(message = "{NotBlank.password}")
+    @Size(min = 8, message = "{Size.password}")
     private String password;
 
-    @NotBlank
-    @Size(max = 20, message = "20글자 이하여야합니다.")
+    @NotBlank(message = "{NotBlank.name}")
+    @Size(max = 20, message = "{Size.name}")
     private String name;
 }
