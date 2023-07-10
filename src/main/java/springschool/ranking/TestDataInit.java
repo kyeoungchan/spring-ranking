@@ -1,18 +1,20 @@
 package springschool.ranking;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.repository.StudentRepository;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+@Profile("local")
 @Component
 @RequiredArgsConstructor
 public class TestDataInit {
@@ -22,7 +24,8 @@ public class TestDataInit {
     /**
      * 테스트용 데이터 추가
      */
-    @PostConstruct
+//    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void init() {
         Member member = new Member();
         member.setUserId("test");

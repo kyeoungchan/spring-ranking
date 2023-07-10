@@ -9,6 +9,7 @@ import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.domain.MemberUpdateDto;
 import springschool.ranking.member.repository.MemberRepository;
+import springschool.ranking.member.repository.MemoryMemberRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,7 +25,9 @@ class MemberServiceImplTest {
 
     @AfterEach
     void clearStore() {
-        memberRepository.clearStore();
+        if (memberRepository instanceof MemoryMemberRepository) {
+            ((MemoryMemberRepository) memberRepository).clearStore();
+        }
     }
 
     @Test

@@ -11,5 +11,4 @@ public interface StudentRepository {
 
     List<Student> findAll();
 
-    void clearStore();
 }

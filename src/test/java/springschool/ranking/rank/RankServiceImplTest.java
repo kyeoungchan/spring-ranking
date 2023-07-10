@@ -1,5 +1,6 @@
 package springschool.ranking.rank;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import springschool.ranking.rank.domain.Rank;
 import springschool.ranking.rank.service.RankService;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
+import springschool.ranking.student.repository.MemoryStudentRepository;
 import springschool.ranking.student.repository.StudentRepository;
 
 import java.util.ArrayList;
@@ -23,9 +25,11 @@ class RankServiceImplTest {
     @Autowired
     RankService rankService;
 
-    @BeforeEach
+    @AfterEach
     void beforeEach() {
-        studentRepository.clearStore();
+        if (studentRepository instanceof MemoryStudentRepository) {
+            ((MemoryStudentRepository) studentRepository).clearStore();
+        }
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.domain.StudentUpdateDto;
+import springschool.ranking.student.repository.MemoryStudentRepository;
 import springschool.ranking.student.repository.StudentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,9 @@ class StudentServiceImplTest {
 
     @AfterEach
     void clearStore() {
-        studentRepository.clearStore();
+        if (studentRepository instanceof MemoryStudentRepository) {
+            ((MemoryStudentRepository) studentRepository).clearStore();
+        }
     }
 
     @Test

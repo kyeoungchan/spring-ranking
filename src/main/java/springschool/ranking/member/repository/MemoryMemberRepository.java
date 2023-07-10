@@ -58,7 +58,6 @@ public class MemoryMemberRepository implements MemberRepository{
     /**
      * 테스트 케이스에 사용하기 위해서 구현한 메서드
      */
-    @Override
     public void clearStore() {
         store.clear();
     }
