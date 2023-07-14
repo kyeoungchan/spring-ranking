@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/api")
 public class HomeController {
 
-    //    @GetMapping("/v1")
+//    @GetMapping("/v1")
     public MemberDto homeV1(HttpServletRequest request) {
         log.info("home controller");
         HttpSession session = request.getSession(false);
@@ -35,6 +35,7 @@ public class HomeController {
 
     /**
      * 인터셉터에서 이미 세션에 대한 검증을 다 끝낸 상황이므로 if문이 불필요하지만, 인터셉터가 제대로 작동되지 않을 때를 대비해서 남겨놨다.
+     * 만약 로그인이 안 된 상태에서 요청을 하면 {-1L, "NONE"} 반환
      * @param loginMember required=false도 불필요하지만 혹시 몰라 남겨놨다.
      */
     @GetMapping("/v1")
