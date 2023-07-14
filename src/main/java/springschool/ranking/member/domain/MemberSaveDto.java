@@ -11,11 +11,11 @@ public class MemberSaveDto {
     @NotBlank
     private String userId;
 
-    @NotBlank(message = "{NotBlank.password}")
-    @Size(min = 8, message = "{Size.password}")
+    @NotBlank
+    @Size(min = 8)
     private String password;
 
-    @NotBlank(message = "{NotBlank.name}")
-    @Size(max = 20, message = "{Size.name}")
+    @NotBlank
+    @Size(max = 20)
     private String name;
 }
