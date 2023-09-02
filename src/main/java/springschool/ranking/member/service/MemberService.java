@@ -1,15 +1,53 @@
 package springschool.ranking.member.service;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.domain.MemberUpdateDto;
+import springschool.ranking.member.repository.MemberRepository;
 
-public interface MemberService {
+import java.util.Optional;
 
-    void register(Member member);
+@Service
+@RequiredArgsConstructor
+public class MemberService {
 
-    Member findMember(Long memberId);
+    private final MemberRepository memberRepository;
 
-    Member login(String userId, String password);
+    /**
+     * @throws DuplicatedException 만약 사용자가 입력한 userId가 이미 DB에 존재한다면
+     */
+    public void register(Member member) {
+        memberRepository.save(member);
+    }
 
-    Member edit(Long memberId, MemberUpdateDto updateDto);
+    public Member findMember(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
+
+    /**
+     * @return null이면 로그인 실패
+     */
+    public Member login(String userId, String password) {
+
+        Optional<Member> findMember = memberRepository.findByUserId(userId);
+
+        if (findMember.isEmpty()) {
+            // userId로 존재하는 회원 자체가 없을 수 있다.
+            return null;
+        } else {
+            return memberRepository.findByUserId(userId)
+                    .filter(m -> m.getPassword().equals(password))
+                    .orElse(null);
+        }
+    }
+
+    public Member edit(Long memberId, MemberUpdateDto updateDto) {
+        Member updatedMember = memberRepository.findById(memberId);
+        updatedMember.setName(updateDto.getName());
+        updatedMember.setPassword(updateDto.getPassword());
+
+        return updatedMember;
+    }
+
 }

@@ -13,7 +13,7 @@ import springschool.ranking.student.repository.StudentRepository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class StudentServiceImplTest {
+class StudentServiceTest {
 
     @Autowired
     StudentRepository studentRepository;

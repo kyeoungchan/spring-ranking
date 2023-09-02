@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Slf4j
-class MemberServiceImplTest {
+class MemberServiceTest {
 
     @Autowired
     MemberRepository memberRepository;
