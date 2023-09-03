@@ -1,33 +1,27 @@
 package springschool.ranking.rank.domain;
 
-import springschool.ranking.rank.Policy;
+import lombok.Getter;
+import springschool.ranking.Semester;
+import springschool.ranking.student.domain.Student;
 
+import javax.persistence.*;
+
+@Entity
+@Getter
 public class Rank {
+
+    @Id @GeneratedValue
+    @Column(name = "rank_id")
     private Long id;
-    private String name;
-    private Policy policy;
-    private int rank;
 
-    public Rank(Long id, String name, Policy policy, int rank) {
-        this.id = id;
-        this.name = name;
-        this.policy = policy;
-        this.rank = rank;
-    }
+    private long score;
+    private int grade;
+    private long rate;
 
-    public Long getId() {
-        return id;
-    }
+    @Embedded // 값 타입
+    private Semester semester;
 
-    public String getName() {
-        return name;
-    }
-
-    public Policy getPolicy() {
-        return policy;
-    }
-
-    public int getRank() {
-        return rank;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private Student student;
 }
