@@ -1,6 +1,8 @@
 package springschool.ranking.rank.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import springschool.ranking.Semester;
 import springschool.ranking.student.domain.Student;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Rank {
 
     @Id @GeneratedValue
@@ -24,4 +27,6 @@ public class Rank {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private Student student;
+
+
 }

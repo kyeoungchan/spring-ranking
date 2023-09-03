@@ -15,20 +15,6 @@ public interface RankPolicyService {
     /**
      * @return 학생의 등수 반환
      */
-    int rank(Student student);
+    int rank(Long studentId);
 
-    /**
-     * 전체 학생의 리스트 출력
-     */
-    void printRankList();
-
-    /**
-     * 전체 학생의 리스트를 반환
-     */
-    List<Student> getSortedList();
-
-    /**
-     * @return 현재 어떤 정책 기준인지 반환
-     */
-    Policy getPolicy();
 }
