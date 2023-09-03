@@ -15,4 +15,6 @@ public interface MemberRepository {
 
     List<Member> findAll();
 
+    List<Member> findMemberByName(String name);
+
 }

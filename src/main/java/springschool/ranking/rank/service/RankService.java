@@ -16,10 +16,13 @@ public class RankService {
     private final StudentRepository studentRepository;
     private final RankPolicyService rankPolicy;
 
-    /**
+/*
+    */
+/**
      * @param id 해당 학생의 id가 주어진다.
      * @return Rank 객체를 반환해준다.
-     */
+     *//*
+
     public Rank createRank(Long id) {
 
         // 매번 rank 결과를 반환할 때마다 전체 석차를 출력시켜준다.
@@ -30,11 +33,15 @@ public class RankService {
 
         return rank;
     }
+*/
 
-    /**
+/*
+    */
+/**
      * 정책에 맞춰 학생들을 정렬시킨 후 Rank 객체에 매핑시켜서 리스트를 반환한다.
      * @return
-     */
+     *//*
+
     public List<Rank> getRankList() {
         List<Student> sortedStudents = rankPolicy.getSortedList();
         ArrayList<Rank> rankList = new ArrayList<>();
@@ -43,4 +50,5 @@ public class RankService {
         }
         return rankList;
     }
+*/
 }
