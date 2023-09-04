@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import springschool.ranking.Semester;
 import springschool.ranking.exception.repository.NoSuchIdInDbException;
+import springschool.ranking.exception.repository.NotRankedException;
 import springschool.ranking.rank.domain.Rank;
 import springschool.ranking.student.domain.Student;
 
@@ -35,11 +36,15 @@ public class RankRepository/* implements RankRepository */{
         return jpaRankRepository.findAllWithStudent() ;
     }
 
+    /**
+     * 학생과 학기 조건에 충족하는 Rank 객체 반환
+     * Rank 객체가 존재하지 않을 시 NotRankedException 발생
+     */
     public Rank findRankByStudentAndSemester(Student student, Semester semester) {
         return findAllWithStudent().stream().filter(
                         rank -> rank.getStudent().equals(student) && rank.getSemester().equals(semester))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchIdInDbException("해당 학기에 해당 학생의 성적이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotRankedException("해당 학기에 해당 학생의 성적이 존재하지 않습니다."));
     }
 
 /*

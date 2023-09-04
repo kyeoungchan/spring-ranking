@@ -6,8 +6,6 @@ import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.domain.MemberUpdateDto;
 import springschool.ranking.member.repository.MemberRepository;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -15,7 +13,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     /**
-     * @throws DuplicatedException 만약 사용자가 입력한 userId가 이미 DB에 존재한다면
+     * @throws DuplicatedException 만약 사용자가 입력한 userId가 이미 DB에 존재한다면 에러 발생
      */
     public void register(Member member) {
         memberRepository.save(member);
@@ -26,20 +24,11 @@ public class MemberService {
     }
 
     /**
-     * @return null이면 로그인 실패
+     * 5번 로그인 시도 후 실패 시 NoSuchUserIdException 발생
      */
+    @Retry(5)
     public Member login(String userId, String password) {
-
-        Optional<Member> findMember = memberRepository.findByUserId(userId);
-
-        if (findMember.isEmpty()) {
-            // userId로 존재하는 회원 자체가 없을 수 있다.
-            return null;
-        } else {
-            return memberRepository.findByUserId(userId)
-                    .filter(m -> m.getPassword().equals(password))
-                    .orElse(null);
-        }
+        return memberRepository.findByUserId(userId);
     }
 
     public Member edit(Long memberId, MemberUpdateDto updateDto) {

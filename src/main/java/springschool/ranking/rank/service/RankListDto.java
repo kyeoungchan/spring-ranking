@@ -1,4 +1,4 @@
-package springschool.ranking.rank.dto;
+package springschool.ranking.rank.service;
 
 import lombok.Data;
 import springschool.ranking.rank.Policy;

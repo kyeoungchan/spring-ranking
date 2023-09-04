@@ -7,8 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import springschool.ranking.Semester;
 import springschool.ranking.rank.Policy;
 import springschool.ranking.rank.domain.Rank;
-import springschool.ranking.rank.dto.RankInputDto;
-import springschool.ranking.rank.dto.RankListDto;
 import springschool.ranking.rank.repository.RankRepository;
 import springschool.ranking.rank.service.policy.RankPolicyService;
 import springschool.ranking.student.domain.Student;

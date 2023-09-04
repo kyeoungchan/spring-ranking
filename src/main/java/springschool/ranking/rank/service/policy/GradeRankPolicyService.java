@@ -7,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import springschool.ranking.Semester;
 import springschool.ranking.exception.repository.NoSuchIdInDbException;
+import springschool.ranking.exception.repository.NotRankedException;
 import springschool.ranking.rank.Policy;
 import springschool.ranking.rank.domain.Rank;
-import springschool.ranking.rank.dto.RankListDto;
+import springschool.ranking.rank.service.RankListDto;
 import springschool.ranking.rank.repository.RankRepository;
 import springschool.ranking.student.repository.StudentRepository;
 
@@ -66,6 +67,10 @@ public class GradeRankPolicyService implements RankPolicyService {
         return rankListDto;
     }
 
+    /**
+     * 지정된 학생의 석차를 조회하는 로직
+     * 해당 학생에 대한 석차 정보가 DB에 없는 경우 NotRankedException 예외 발생
+     */
     @Override
     public int getRankOne(Long studentId, Semester semester) {
 
@@ -76,11 +81,14 @@ public class GradeRankPolicyService implements RankPolicyService {
 
         Rank findRank = rankRepository.findRankByStudentAndSemester(studentRepository.findById(studentId), semester);
 
-        GradeSortingDto element = list.get().stream().filter(dto -> dto.rank.equals(findRank)).findFirst().orElseThrow(() -> new NoSuchIdInDbException("서비스에서 발생"));
+        GradeSortingDto element = list.get().stream().filter(dto -> dto.rank.equals(findRank)).findFirst().orElseThrow(() -> new NotRankedException("서비스에서 발생"));
 
         return list.get().indexOf(element) + 1; // 해당 DTO 의 인덱스 + 1 이 석차다.
     }
 
+    /**
+     * 서비스 내부에서 사용하기 위한 DTO
+     */
     @Data
     @AllArgsConstructor
     static class GradeSortingDto {

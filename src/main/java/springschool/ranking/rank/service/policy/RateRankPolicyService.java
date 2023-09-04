@@ -9,7 +9,7 @@ import springschool.ranking.Semester;
 import springschool.ranking.exception.repository.NoSuchIdInDbException;
 import springschool.ranking.rank.Policy;
 import springschool.ranking.rank.domain.Rank;
-import springschool.ranking.rank.dto.RankListDto;
+import springschool.ranking.rank.service.RankListDto;
 import springschool.ranking.rank.repository.RankRepository;
 import springschool.ranking.student.repository.StudentRepository;
 
