@@ -18,8 +18,8 @@ public class Rank {
     private Long id;
 
     private long score;
-    private int grade;
-    private long rate;
+    private int grade; // 등급. 조회할 때마다 업데이트 필요
+    private long rate; // 백분율. 조회할 때마다 업데이트 필요
 
     @Embedded // 값 타입
     private Semester semester;
@@ -28,5 +28,9 @@ public class Rank {
     @JoinColumn(name = "student_id")
     private Student student;
 
-
+    public Rank(long score, Semester semester, Student student) {
+        this.score = score;
+        this.semester = semester;
+        this.student = student;
+    }
 }

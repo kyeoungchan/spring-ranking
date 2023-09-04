@@ -15,7 +15,8 @@ public class RankInputDto {
     private String studentName;
 
     //    private Semester semester;
-    // 학년 학기를 DTO로는 따로 받는다.
+    // 학년 학기를 DTO 로는 따로 받는다.
+
     @Size(min = 1, max = 3)
     private int year; // 학년. 학년은 1 ~ 3학년 중 하나만 선택한다.
 
