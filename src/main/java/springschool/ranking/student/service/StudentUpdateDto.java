@@ -1,10 +1,7 @@
-package springschool.ranking.student.domain;
+package springschool.ranking.student.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Range;
-import springschool.ranking.validator.ValidEnum;
-import springschool.ranking.validator.ValueOfEnum;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,6 +13,16 @@ public class StudentUpdateDto {
     @NotBlank
     private String name;
 
+    private String phoneNumber;
+
+    @NotNull
+    private Long teacherId;
+
+    @NotNull
+    private String teacherName;
+
+
+/*
     @NotNull
     @Range(min = 0, max = 100)
     private Integer score;
@@ -28,4 +35,5 @@ public class StudentUpdateDto {
     @NotNull
     @Range(min = 0L, max = 100L)
     private Double rate;
+*/
 }

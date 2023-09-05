@@ -18,7 +18,7 @@ public class ExControllerAdvice {
     @ExceptionHandler(DuplicatedException.class)
     public ErrorResult duplicateExHandler(DuplicatedException e) {
         log.error("[exceptionHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("DUPLICATED_ERROR", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

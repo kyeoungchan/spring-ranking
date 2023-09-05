@@ -2,7 +2,6 @@ package springschool.ranking.member.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import springschool.ranking.exception.repository.NoSuchUserIdException;
 import springschool.ranking.member.domain.Member;
 
 import java.util.List;
@@ -31,11 +30,10 @@ public class MemberRepository {
     }
 
     public List<Member> findAll() {
-        return null;
+        return memberJpaRepository.findAll();
     }
 
-    // 쿼리 DSL 학습 후 구현 예정
     public List<Member> findMemberByName(String name) {
-        return null;
+        return memberJpaRepository.findMemberByName(name);
     }
 }

@@ -1,17 +1,14 @@
 package springschool.ranking.student.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import springschool.ranking.Semester;
 import springschool.ranking.member.domain.Member;
-import springschool.ranking.rank.domain.Rank;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Student {
 
     @Id @GeneratedValue
@@ -28,14 +25,14 @@ public class Student {
     private Member teacher;
 
     /**
-     * id, Rank 를 제외하고 생성자를 주입받는다.
+     * Student 를 새로 등록할 때 사용하는 로직이다.
      * Rank 는 학기마다 업데이트 되는 것이므로 생성자 주입을 하지는 않는다.
      */
-    public Student(String name, String phoneNumber, Semester semester, Member teacher) {
+    public Student createStudent(String name, String phoneNumber, Member teacher) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.semester = semester;
         matchTeacher(teacher);
+        return this;
     }
 
     /**
@@ -44,5 +41,14 @@ public class Student {
     private void matchTeacher(Member teacher) {
         this.teacher = teacher;
         teacher.getStudents().add(this);
+    }
+
+    /**
+     * 회원 정보를 수정하기 위한 로직
+     */
+    public void updateStudent(String name, String phoneNumber, Member teacher) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        matchTeacher(teacher);
     }
 }

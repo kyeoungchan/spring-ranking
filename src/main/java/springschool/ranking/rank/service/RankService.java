@@ -52,6 +52,7 @@ public class RankService {
 
     /**
      * 학생의 점수를 입력하는 로직
+     * PutMapping 으로 호출한다.
      */
     @Transactional // readOnly = false 로 변경
     public void inputRank(RankInputDto rankInputDto) {

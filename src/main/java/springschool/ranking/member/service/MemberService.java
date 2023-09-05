@@ -3,7 +3,6 @@ package springschool.ranking.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springschool.ranking.exception.repository.NoSuchUserIdException;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
 
@@ -28,8 +27,8 @@ public class MemberService {
 
     @Transactional
     public void edit(Long memberId, MemberUpdateDto updateDto) {
-        Member updatedMember = memberRepository.findById(memberId);
-        updatedMember.updateMember(updatedMember.getName(), updatedMember.getPassword());
+        Member findMember = memberRepository.findById(memberId);
+        findMember.updateMember(updateDto.getName(), updateDto.getPassword());
     }
 
     /**

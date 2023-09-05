@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
-import springschool.ranking.student.domain.StudentUpdateDto;
 import springschool.ranking.student.repository.MemoryStudentRepository;
 import springschool.ranking.student.repository.StudentRepository;
 

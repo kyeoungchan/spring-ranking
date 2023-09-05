@@ -14,8 +14,8 @@ public class StudentRepository /*implements StudentRepository*/ {
 
     private final StudentJpaRepository studentJpaRepository;
 
-    public void save(Student student) {
-        studentJpaRepository.save(student);
+    public Student save(Student student) {
+        return studentJpaRepository.save(student);
     }
 
     public Student findById(Long studentId) {
@@ -30,6 +30,13 @@ public class StudentRepository /*implements StudentRepository*/ {
         return studentJpaRepository.findAllBySemester(semester.getYear(), semester.getSemester());
     }
 
+    public List<Student> findAllByName(String name) {
+        return studentJpaRepository.findAllByName(name);
+    }
+
+    public void deleteOne(Long studentId) {
+        studentJpaRepository.delete(findById(studentId));
+    }
 
     /**
      * QueryDsl 적용 예정

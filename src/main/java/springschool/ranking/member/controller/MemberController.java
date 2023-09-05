@@ -87,17 +87,6 @@ public class MemberController {
     }
 
     /**
-     * 회원 탈퇴 시 사용자 정보를 DB 에서 삭제 후 로그아웃
-     */
-    @PostMapping("/{memberId}/withdraw/v1")
-    public void withdrawV1(@PathVariable Long memberId, HttpServletRequest request) {
-        log.info("회원 탈퇴 컨트롤러 호출");
-
-        memberService.withdraw(memberId);
-        logoutV1(request);
-    }
-
-    /**
      * @param memberSaveDto 회원가입용 DTO 객체
      * @param bindingResult 회원가입 검증 관련
      * @return 컨트롤러 간에는 MemberDto 를 반환하는 것으로 통일하였다.
@@ -150,6 +139,17 @@ public class MemberController {
         Member updatedMember = memberService.checkMember(memberId);
 
         return new MemberDto(updatedMember.getId(), updatedMember.getName());
+    }
+
+    /**
+     * 회원 탈퇴 시 사용자 정보를 DB 에서 삭제 후 로그아웃
+     */
+    @PostMapping("/{memberId}/withdraw/v1")
+    public void withdrawV1(@PathVariable Long memberId, HttpServletRequest request) {
+        log.info("회원 탈퇴 컨트롤러 호출");
+
+        memberService.withdraw(memberId);
+        logoutV1(request);
     }
 
     /**

@@ -13,4 +13,8 @@ public interface StudentJpaRepository extends JpaRepository<Student, Long> {
             "where s.semester.year = :year and s.semester.semester = :semester")
     List<Student> findAllBySemester(@Param("year") int year, @Param("semester") int semester);
 
+    @Query("select s from Student s " +
+            "where s.name like :name")
+    List<Student> findAllByName(@Param("name") String name);
+
 }
