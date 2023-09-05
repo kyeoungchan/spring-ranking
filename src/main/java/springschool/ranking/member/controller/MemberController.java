@@ -13,6 +13,7 @@ import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.exception.repository.UnValidatedException;
 import springschool.ranking.member.domain.*;
 import springschool.ranking.member.service.MemberService;
+import springschool.ranking.member.service.MemberUpdateDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

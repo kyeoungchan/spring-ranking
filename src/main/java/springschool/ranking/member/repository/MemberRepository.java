@@ -2,7 +2,6 @@ package springschool.ranking.member.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import springschool.ranking.exception.repository.NoSuchIdInDbException;
 import springschool.ranking.exception.repository.NoSuchUserIdException;
 import springschool.ranking.member.domain.Member;
 
@@ -23,7 +22,11 @@ public class MemberRepository {
     }
 
     public Member findByUserId(String userId) {
-        return memberJpaRepository.findMemberByUserId(userId).orElseThrow(NoSuchUserIdException::new);
+        return memberJpaRepository.findMemberByUserId(userId).orElse(null);
+    }
+
+    public void deleteMember(Long id) {
+        memberJpaRepository.delete(findById(id));
     }
 
     public List<Member> findAll() {

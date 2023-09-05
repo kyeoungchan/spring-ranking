@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.member.domain.Member;
-import springschool.ranking.member.domain.MemberUpdateDto;
 import springschool.ranking.member.repository.MemberRepository;
 import springschool.ranking.member.repository.MemoryMemberRepository;
 
@@ -41,7 +40,7 @@ class MemberServiceTest {
         memberService.register(newMember);
 
         // when
-        Member findMember = memberService.findMember(newMember.getId());
+        Member findMember = memberService.checkMember(newMember.getId());
 
         // then
         assertThat(findMember).isEqualTo(newMember);
@@ -82,7 +81,7 @@ class MemberServiceTest {
         Member loginMember = memberService.login("a", "b");
 
         // then
-        Member findMember = memberService.findMember(member.getId());
+        Member findMember = memberService.checkMember(member.getId());
         assertThat(loginMember).isEqualTo(findMember);
     }
 

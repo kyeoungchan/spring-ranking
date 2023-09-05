@@ -1,4 +1,4 @@
-package springschool.ranking.member.domain;
+package springschool.ranking.member.service;
 
 import lombok.Data;
 

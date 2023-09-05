@@ -20,4 +20,13 @@ public class Member {
 
     @OneToMany(mappedBy = "teacher")
     private List<Student> students = new ArrayList<>();
+
+    /**
+     * 회원 정보 수정
+     * 수정할 수 있는 정보는 이름과 비밀번호
+     */
+    public void updateMember(String changingName, String changingPassword) {
+        this.name = changingName;
+        this.password = changingPassword;
+    }
 }

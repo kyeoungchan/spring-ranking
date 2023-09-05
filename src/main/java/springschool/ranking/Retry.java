@@ -1,4 +1,4 @@
-package springschool.ranking.member.service;
+package springschool.ranking;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@interface Retry {
+public @interface Retry {
     int value() default 3;
 }
