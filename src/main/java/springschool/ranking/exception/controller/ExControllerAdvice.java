@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import springschool.ranking.exception.repository.NoSuchUserIdException;
 import springschool.ranking.exception.repository.UnValidatedException;
 import springschool.ranking.exception.domain.ErrorResult;
 import springschool.ranking.exception.repository.DBException;
@@ -32,5 +33,12 @@ public class ExControllerAdvice {
     public ErrorResult unValidatedExHandler(UnValidatedException e) {
         log.error("[exceptionHandler] ex", e);
         return new ErrorResult("BAD", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchUserIdException.class)
+    public ErrorResult noUserIdExHandler(UnValidatedException e) {
+        log.error("[exceptionHandler] ex", e);
+        return new ErrorResult("LOGIN_ERROR", e.getMessage());
     }
 }

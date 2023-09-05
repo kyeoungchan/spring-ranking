@@ -6,6 +6,7 @@ import springschool.ranking.exception.repository.NoSuchUserIdException;
 import springschool.ranking.member.domain.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,8 +22,8 @@ public class MemberRepository {
         return memberJpaRepository.findById(id).orElse(null);
     }
 
-    public Member findByUserId(String userId) {
-        return memberJpaRepository.findMemberByUserId(userId).orElse(null);
+    public Optional<Member> findByUserId(String userId) {
+        return memberJpaRepository.findMemberByUserId(userId);
     }
 
     public void deleteMember(Long id) {

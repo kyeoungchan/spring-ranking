@@ -22,6 +22,16 @@ public class Member {
     private List<Student> students = new ArrayList<>();
 
     /**
+     * 회원 가입 로직
+     */
+    public Member createMember(String userId, String password, String name) {
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        return this;
+    }
+
+    /**
      * 회원 정보 수정
      * 수정할 수 있는 정보는 이름과 비밀번호
      */
