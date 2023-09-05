@@ -1,4 +1,4 @@
-package springschool.ranking.member.domain;
+package springschool.ranking.member.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

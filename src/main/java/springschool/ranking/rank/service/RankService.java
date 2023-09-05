@@ -55,7 +55,7 @@ public class RankService {
      * PutMapping 으로 호출한다.
      */
     @Transactional // readOnly = false 로 변경
-    public void inputRank(RankInputDto rankInputDto) {
+    public Rank inputRank(RankInputDto rankInputDto) {
 
         Long studentId = rankInputDto.getStudentId();
         Semester semester = new Semester(rankInputDto.getYear(), rankInputDto.getSemester());
@@ -64,7 +64,7 @@ public class RankService {
 
         long score = rankInputDto.getScore();
         Rank rank = new Rank(score, semester, targetStudent);
-        rankRepository.save(rank);
+        return rankRepository.save(rank);
     }
 
     /**
@@ -101,5 +101,20 @@ public class RankService {
      */
     public int getRankOne(Long studentId) {
         return rankPolicyServiceMap.get(policyHolder).getRankOne(studentId, semesterHolder.get());
+    }
+
+    /**
+     * 석차 객체 조회
+     */
+    public Rank findRank(Long id) {
+        return rankRepository.findById(id);
+    }
+
+    /**
+     * 해당 학년 학기, 해당 정책, 해당 학생의 랭크 객체 반환
+     */
+    public Rank findRankSpec(Long studentId) {
+        Student student = studentRepository.findById(studentId);
+        return rankRepository.findRankByStudentAndSemester(student, semesterHolder.get());
     }
 }

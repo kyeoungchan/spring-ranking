@@ -3,7 +3,6 @@ package springschool.ranking.rank.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import springschool.ranking.Semester;
 import springschool.ranking.rank.domain.Rank;
 
 import java.util.List;
@@ -19,6 +18,11 @@ public interface JpaRankRepository extends JpaRepository<Rank, Long> {
     @Query("select r from Rank r " +
             "join fetch r.student s")
     List<Rank> findAllWithStudent();
+
+    @Query("select r from Rank r " +
+            "join r.student s " +
+            "where s.id = :studentId and r.semester.year = :year and r.semester.semester = :semester")
+    Rank findRankSpec(@Param("studentId") Long studentId, @Param("year") int year, @Param("semester") int semester);
 /*
     public List<Order> findAllWithMemberDelivery() {
         return em.createQuery(

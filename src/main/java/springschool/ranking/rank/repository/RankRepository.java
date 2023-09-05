@@ -12,12 +12,12 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class RankRepository/* implements RankRepository */{
+public class RankRepository {
 
     private final JpaRankRepository jpaRankRepository;
 
-    public void save(Rank rank) {
-        jpaRankRepository.save(rank);
+    public Rank save(Rank rank) {
+        return jpaRankRepository.save(rank);
     }
 
     public Rank findById(Long id) {
@@ -46,6 +46,17 @@ public class RankRepository/* implements RankRepository */{
                 .findFirst()
                 .orElseThrow(() -> new NotRankedException("해당 학기에 해당 학생의 성적이 존재하지 않습니다."));
     }
+
+/*
+    */
+/**
+     * 학생, 학년, 학기의 조건에 충족하는 Rank 객체 반환
+     *//*
+
+    public Rank findRankSpec(Long studentId, Semester semester) {
+        return jpaRankRepository.findRankSpec(studentId, semester.getYear(), semester.getSemester());
+    }
+*/
 
 /*
     public List<Order> findAllWithMemberDelivery() {

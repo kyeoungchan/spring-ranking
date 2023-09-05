@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import springschool.ranking.Retry;
+import springschool.ranking.aop.Retry;
 import springschool.ranking.SessionConst;
 import springschool.ranking.exception.domain.ErrorResult;
 import springschool.ranking.exception.repository.DuplicatedException;
