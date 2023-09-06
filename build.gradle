@@ -47,6 +47,9 @@ dependencies {
 // swagger 추가
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+//	h2 데이터베이스 추가
+	runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {

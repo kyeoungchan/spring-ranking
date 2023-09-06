@@ -29,7 +29,7 @@ class StudentRepositoryTest {
 
         studentRepository.save(student);
 
-        assertThat(student.getId()).isEqualTo("s1");
+        assertThat(student.getId()).isEqualTo(1L);
     }
 
     @Test
