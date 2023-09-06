@@ -1,6 +1,7 @@
 package springschool.ranking;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Profile("local")
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TestDataInit {
@@ -27,6 +29,8 @@ public class TestDataInit {
 //    @PostConstruct
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
+        log.info("TestDataInit 실행 (아무 작동 안 함)");
+/*
         Member member = new Member();
         member.setUserId("test");
         member.setPassword("test!");
@@ -44,5 +48,6 @@ public class TestDataInit {
         for (Student student : students) {
             studentRepository.save(student);
         }
+*/
     }
 }

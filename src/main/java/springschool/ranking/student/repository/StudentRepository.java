@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class StudentRepository /*implements StudentRepository*/ {
+public class StudentRepository {
 
     private final StudentJpaRepository studentJpaRepository;
 
