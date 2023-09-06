@@ -8,6 +8,7 @@ import springschool.ranking.Semester;
 import springschool.ranking.record.Policy;
 import springschool.ranking.record.domain.Record;
 import springschool.ranking.record.repository.RecordRepository;
+import springschool.ranking.record.service.dto.ScoreInputDto;
 import springschool.ranking.record.service.dto.partial.PartialRecordDto;
 import springschool.ranking.record.service.dto.partial.PartialRecordListDto;
 import springschool.ranking.record.service.policy.RecordPolicyService;
@@ -81,39 +82,27 @@ public class RecordService {
      * PutMapping 으로 호출한다.
      */
     @Transactional // readOnly = false 로 변경
-    public Record inputRank(RankInputDto rankInputDto) {
+    public Record inputRank(ScoreInputDto scoreInputDto) {
 
-        Long studentId = rankInputDto.getStudentId();
-        Semester semester = new Semester(rankInputDto.getYear(), rankInputDto.getSemester());
+        Long studentId = scoreInputDto.getStudentId();
+        Semester semester = new Semester(scoreInputDto.getYear(), scoreInputDto.getSemester());
 
         Student targetStudent = studentRepository.findById(studentId);
 
-        long score = rankInputDto.getScore();
-
-        // grade 입력 로직
-
-
-        // rate 입력 로직
+        double score = scoreInputDto.getScore();
 
         Record record = new Record(score, semester, targetStudent);
+
+        // rank 입력 로직
+        record = rankPolicyServiceMap.get("RankRecordPolicyService").setRecordByPolicy(record);
+
+        // grade 입력 로직
+        record = rankPolicyServiceMap.get("GradeRecordPolicyService").setRecordByPolicy(record);
+
+        // rate 입력 로직
+        record = rankPolicyServiceMap.get("RateRecordPolicyService").setRecordByPolicy(record);
+
         return recordRepository.save(record);
-    }
-
-    /**
-     * 등급을 반환해주는 메서드
-     * 동시에 다른 데이터들도 모두 등급을 업데이트 해준다.
-     */
-    private int settingGrades(Record record) {
-        List<Record> records = recordRepository.findAllSimply();
-        records.add(record);
-        List<Record> sortedRecords = records.stream()
-                .sorted(Comparator.comparing(Record::getScore).reversed()) // 점수 순으로 내림차순
-                .collect(Collectors.toList());
-
-        sortedRecords.stream()
-                .forEach(r -> {
-                    if
-                });
     }
 
     /**

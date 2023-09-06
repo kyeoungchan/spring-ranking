@@ -11,7 +11,7 @@ public class PartialRecordDto {
     private Long studentId;
 
     // 성적 관련 데이터
-    private long score;
+    private double score;
 
     // 학년 학기
     private int year;

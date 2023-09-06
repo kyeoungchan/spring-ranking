@@ -7,7 +7,7 @@ public class PartialGradeRecordDto extends PartialRecordDto {
 
     private int grade;
 
-    public PartialGradeRecordDto(Long studentId, long score, int year, int semester, int grade) {
+    public PartialGradeRecordDto(Long studentId, double score, int year, int semester, int grade) {
         super(studentId, score, year, semester);
         this.grade = grade;
     }

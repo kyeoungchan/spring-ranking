@@ -1,4 +1,4 @@
-package springschool.ranking.record.service;
+package springschool.ranking.record.service.dto;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
  * 점수 입력을 위한 DTO
  */
 @Data
-public class RankInputDto {
+public class ScoreInputDto {
 
     private Long studentId;
     private String studentName;
@@ -24,5 +24,5 @@ public class RankInputDto {
     private int semester; // 학기. 학기는 1, 2학기 중 하나만 선택한다.
 
     @NotBlank
-    private long score; // 점수 입력
+    private double score; // 점수 입력
 }

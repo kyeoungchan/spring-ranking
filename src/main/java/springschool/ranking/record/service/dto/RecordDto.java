@@ -9,10 +9,10 @@ public class RecordDto {
     private final Long studentId;
 
     // 성적 관련 데이터
-    private final long score;
-    private final int rank;
+    private final double score;
+    private final long rank;
     private final int grade;
-    private final int rate;
+    private final double rate;
 
     // 학년 학기
     private final int year;

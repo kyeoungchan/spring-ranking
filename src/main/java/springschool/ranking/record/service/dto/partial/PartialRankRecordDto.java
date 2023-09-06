@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class PartialRankRecordDto extends PartialRecordDto {
 
-    private final int rank;
+    private final long rank;
 
-    public PartialRankRecordDto(Long studentId, long score, int year, int semester, int rank) {
+    public PartialRankRecordDto(Long studentId, double score, int year, int semester, long rank) {
         super(studentId, score, year, semester);
         this.rank = rank;
     }

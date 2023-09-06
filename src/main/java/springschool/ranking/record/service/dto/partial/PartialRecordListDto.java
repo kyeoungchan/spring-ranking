@@ -10,6 +10,6 @@ import java.util.List;
 public class PartialRecordListDto {
 
     private final Policy policy;
-    private final int count;
+    private final long count;
     private final List<PartialRecordDto> recordList = new ArrayList<>();
 }

@@ -17,10 +17,10 @@ public class Record {
     @Column(name = "rank_id")
     private Long id;
 
-    private long score; // 점수
-    private int rank; // 등수
-    private int grade; // 등급.
-    private double rate; // 백분율.
+    private double score; // 점수
+    private long rank; // 등수. update 시 반영
+    private int grade; // 등급. update 시 반영
+    private double rate; // 백분율. update 시 반영
 
     @Embedded // 값 타입
     private Semester semester;
@@ -29,11 +29,17 @@ public class Record {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    public void updateScore(long score) {
+    public Record(double score, Semester semester, Student student) {
+        this.score = score;
+        this.semester = semester;
+        this.student = student;
+    }
+
+    public void updateScore(double score) {
         this.score = score;
     }
 
-    public void updateRank(int rank) {
+    public void updateRank(long rank) {
         this.rank = rank;
     }
 
