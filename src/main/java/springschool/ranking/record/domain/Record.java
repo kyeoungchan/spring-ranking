@@ -1,4 +1,4 @@
-package springschool.ranking.rank.domain;
+package springschool.ranking.record.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,15 +11,16 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Rank {
+public class Record {
 
     @Id @GeneratedValue
     @Column(name = "rank_id")
     private Long id;
 
-    private long score;
-    private int grade; // 등급. 조회할 때마다 업데이트 필요
-    private long rate; // 백분율. 조회할 때마다 업데이트 필요
+    private long score; // 점수
+    private int rank; // 등수
+    private int grade; // 등급.
+    private double rate; // 백분율.
 
     @Embedded // 값 타입
     private Semester semester;
@@ -28,9 +29,21 @@ public class Rank {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    public Rank(long score, Semester semester, Student student) {
+    public void updateScore(long score) {
         this.score = score;
-        this.semester = semester;
-        this.student = student;
     }
+
+    public void updateRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void updateGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public void updateRate(double rate) {
+        this.rate = rate;
+    }
+
+
 }

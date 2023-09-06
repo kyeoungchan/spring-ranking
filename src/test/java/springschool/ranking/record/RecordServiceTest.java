@@ -1,11 +1,11 @@
-package springschool.ranking.rank;
+package springschool.ranking.record;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import springschool.ranking.rank.domain.Rank;
-import springschool.ranking.rank.service.RankService;
+import springschool.ranking.record.domain.Record;
+import springschool.ranking.record.service.RecordService;
 import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.repository.MemoryStudentRepository;
@@ -17,12 +17,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class RankServiceTest {
+class RecordServiceTest {
 
     @Autowired
     StudentRepository studentRepository;
     @Autowired
-    RankService rankService;
+    RecordService recordService;
 
     @AfterEach
     void beforeEach() {
@@ -46,11 +46,11 @@ class RankServiceTest {
         }
 
         //given
-        Rank rank1 = rankService.createRank(students.get(0).getId());
-        Rank rank2 = rankService.createRank(students.get(1).getId());
+        Record record1 = recordService.createRank(students.get(0).getId());
+        Record record2 = recordService.createRank(students.get(1).getId());
 
         //then
-        assertThat(rank1.getRank()).isEqualTo(1);
-        assertThat(rank2.getRank()).isEqualTo(4);
+        assertThat(record1.getRank()).isEqualTo(1);
+        assertThat(record2.getRank()).isEqualTo(4);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface StudentJpaRepository extends JpaRepository<Student, Long> {
 
     @Query("select s from Student s " +
-            "where s.semester.year = :year and s.semester.semester = :semester")
+            "where s.curSemester.year = :year and s.curSemester.semester = :semester")
     List<Student> findAllBySemester(@Param("year") int year, @Param("semester") int semester);
 
     @Query("select s from Student s " +

@@ -18,7 +18,7 @@ public class Student {
     private String phoneNumber;
 
     @Embedded // 값 타입
-    private Semester semester;
+    private Semester curSemester;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
