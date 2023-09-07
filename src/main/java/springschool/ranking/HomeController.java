@@ -3,7 +3,7 @@ package springschool.ranking;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import springschool.ranking.member.domain.Member;
-import springschool.ranking.member.controller.MemberDto;
+import springschool.ranking.member.controller.dto.MemberDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

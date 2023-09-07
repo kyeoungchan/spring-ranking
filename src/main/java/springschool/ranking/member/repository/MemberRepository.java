@@ -3,7 +3,9 @@ package springschool.ranking.member.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import springschool.ranking.exception.repository.NoSuchIdInDbException;
 import springschool.ranking.member.domain.Member;
+import springschool.ranking.student.domain.Student;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +22,7 @@ public class MemberRepository {
     }
 
     public Member findById(Long id) {
-        return memberJpaRepository.findById(id).orElse(null);
+        return memberJpaRepository.findById(id).orElseThrow(NoSuchIdInDbException::new);
     }
 
     public Optional<Member> findByUserId(String userId) {
@@ -38,4 +40,5 @@ public class MemberRepository {
     public List<Member> findMemberByName(String name) {
         return memberJpaRepository.findMemberByName(name);
     }
+
 }

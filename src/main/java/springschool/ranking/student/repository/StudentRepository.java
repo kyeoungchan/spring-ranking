@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import springschool.ranking.Semester;
 import springschool.ranking.exception.repository.NoSuchIdInDbException;
+import springschool.ranking.member.domain.Member;
 import springschool.ranking.student.domain.Student;
 
 import java.util.List;
@@ -37,7 +38,11 @@ public class StudentRepository {
     }
 
     public void deleteOne(Long studentId) {
-        studentJpaRepository.delete(findById(studentId));
+        studentJpaRepository.delete(findById( studentId));
+    }
+
+    public List<Student> findAllByMember(Member member) {
+        return studentJpaRepository.findAllByMember(member.getId());
     }
 
     /**

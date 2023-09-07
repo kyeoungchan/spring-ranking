@@ -1,4 +1,4 @@
-package springschool.ranking.student.controller.dto;
+package springschool.ranking.commondto;
 
 import lombok.Data;
 

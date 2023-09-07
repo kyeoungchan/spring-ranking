@@ -9,10 +9,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springschool.ranking.aop.Retry;
 import springschool.ranking.SessionConst;
+import springschool.ranking.commondto.StudentCheckListDto;
 import springschool.ranking.exception.domain.ErrorResult;
 import springschool.ranking.exception.repository.DuplicatedException;
 import springschool.ranking.exception.repository.NoSuchUserIdException;
 import springschool.ranking.exception.repository.UnValidatedException;
+import springschool.ranking.member.controller.dto.MemberDto;
+import springschool.ranking.member.controller.dto.MemberLoginDto;
+import springschool.ranking.member.controller.dto.MemberSaveDto;
 import springschool.ranking.member.domain.*;
 import springschool.ranking.member.service.MemberService;
 import springschool.ranking.member.service.MemberUpdateDto;
@@ -106,7 +110,7 @@ public class MemberController {
         // Member의 id에 대한 값은 리포지토리에서 자동 생성한다.
 /*
         Member registerMember = new Member();
-        registerMember.createMember(memberSaveDto.getUserId(), memberSaveDto.getPassword(), memberSaveDto.getName());
+        registerMember.createMember(memberSaveDto.getUserId(), memberSaveDto.getPassword(), memberSaveDto.getName());~
 */
         Member registerMember = Member.createMember(memberSaveDto.getUserId(), memberSaveDto.getPassword(), memberSaveDto.getName());
 
@@ -120,6 +124,12 @@ public class MemberController {
 
         log.info("회원가입 성공 로직 실행");
         return new MemberDto(registerMember.getId(), memberSaveDto.getName());
+    }
+
+    @GetMapping("/{memberId}/students/v1")
+    public StudentCheckListDto checkStudentsOfMember(@PathVariable Long memberId) {
+        Member member = memberService.checkMember(memberId);
+        return memberService.checkStudentsByMember(member);
     }
 
     /**

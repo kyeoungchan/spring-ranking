@@ -1,4 +1,4 @@
-package springschool.ranking.member.controller;
+package springschool.ranking.member.controller.dto;
 
 import lombok.Data;
 

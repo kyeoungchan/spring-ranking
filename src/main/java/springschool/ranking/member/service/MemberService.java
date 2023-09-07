@@ -3,8 +3,15 @@ package springschool.ranking.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import springschool.ranking.commondto.StudentCheckElementDto;
+import springschool.ranking.commondto.StudentCheckListDto;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
+import springschool.ranking.student.domain.Student;
+import springschool.ranking.student.repository.StudentRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -12,6 +19,7 @@ import springschool.ranking.member.repository.MemberRepository;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final StudentRepository studentRepository;
 
     /**
      * @throws DuplicatedException 만약 사용자가 입력한 userId가 이미 DB에 존재한다면 에러 발생
@@ -23,6 +31,19 @@ public class MemberService {
 
     public Member checkMember(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+
+    public StudentCheckListDto checkStudentsByMember(Member member) {
+        List<Student> students = studentRepository.findAllByMember(member);
+
+        StudentCheckListDto result = new StudentCheckListDto();
+        result.setCount(students.size());
+
+        for (Student s : students) {
+            result.getStudents().add(new StudentCheckElementDto(s.getId(), s.getName()));
+        }
+
+        return result;
     }
 
     @Transactional

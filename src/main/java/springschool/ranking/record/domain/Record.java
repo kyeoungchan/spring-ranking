@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "record_table")
 public class Record {
 
     @Id @GeneratedValue

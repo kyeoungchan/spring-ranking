@@ -171,13 +171,34 @@ class StudentRepositoryTest {
     }
 
     @Test
-    void findAllByDto() {
+    void findAllByMember() {
 
         // given
+        Semester semester = new Semester(1, 1);
+
+        Member teacher1 = Member.createMember("userid", "thispassword", "teacherName");
+        Member teacher2 = Member.createMember("!!userid", "@@thispassword", "teacherName?");
+
+        Student student1 = Student.createStudent("s1", "0100000", semester, teacher1);
+        Student student2 = Student.createStudent("s2", "01023000", semester, teacher1);
+        Student student3 = Student.createStudent("s2", "01023000", semester, teacher2);
+
+
+        memberRepository.save(teacher1);
+        memberRepository.save(teacher2);
+        studentRepository.save(student1);
+        studentRepository.save(student2);
+        studentRepository.save(student3);
 
         // when
+        List<Student> students1 = studentRepository.findAllByMember(teacher1);
+        List<Student> students2 = studentRepository.findAllByMember(teacher2);
 
         // then
+        assertThat(students1.size()).isEqualTo(2);
+        assertThat(students1).containsExactly(student1, student2);
+        assertThat(students2).containsExactly(student3);
+        assertThat(students1).doesNotContain(student3);
 
     }
 }

@@ -17,4 +17,8 @@ public interface StudentJpaRepository extends JpaRepository<Student, Long> {
             "where s.name like :name")
     List<Student> findAllByName(@Param("name") String name);
 
+    @Query("select s from Student s " +
+            "where s.teacher.id = :memberId")
+    List<Student> findAllByMember(@Param("memberId") Long memberId);
+
 }
