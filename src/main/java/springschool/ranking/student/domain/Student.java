@@ -25,12 +25,17 @@ public class Student {
 
     /**
      * Student 를 새로 등록할 때 사용하는 로직이다.
-     * Rank 는 학기마다 업데이트 되는 것이므로 생성자 주입을 하지는 않는다.
+     * Semester 는 학기마다 업데이트 되는 것이므로 생성자 주입을 하지는 않는다.
      */
-    public static Student createStudent(String name, String phoneNumber, Member teacher) {
+    public static Student createStudent(String name, String phoneNumber, Semester semester, Member teacher) {
         Student student = new Student();
         student.name = name;
         student.phoneNumber = phoneNumber;
+
+        student.curSemester = new Semester();
+        student.curSemester.setYear(semester.getYear());
+        student.curSemester.setSemester(semester.getSemester());
+
         matchTeacher(student, teacher);
         return student;
     }
@@ -44,11 +49,15 @@ public class Student {
     }
 
     /**
-     * 회원 정보를 수정하기 위한 로직
+     * 학생 정보를 수정하기 위한 로직
      */
     public void updateStudent(String name, String phoneNumber, Member teacher) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         matchTeacher(this, teacher);
     }
+
+    /**
+     * 학생 학기 정보를 수정하기 위한 로직
+     */
 }

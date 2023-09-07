@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import springschool.ranking.Semester;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
 import springschool.ranking.student.domain.Student;
@@ -29,6 +30,7 @@ public class StudentService {
 
         String name = addDto.getName();
         String phoneNumber = addDto.getPhoneNumber();
+        Semester semester = addDto.getSemester();
 
         Member teacher = memberRepository.findById(addDto.getTeacherId());
 
@@ -38,7 +40,7 @@ public class StudentService {
 
         return studentRepository.save(createdStudent);
 */
-        return studentRepository.save(Student.createStudent(name, phoneNumber, teacher));
+        return studentRepository.save(Student.createStudent(name, phoneNumber, semester, teacher));
     }
 
     /**

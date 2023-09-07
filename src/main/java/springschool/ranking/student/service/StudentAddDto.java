@@ -1,6 +1,7 @@
 package springschool.ranking.student.service;
 
 import lombok.*;
+import springschool.ranking.Semester;
 
 import javax.validation.constraints.NotBlank;
 
@@ -10,6 +11,9 @@ public class StudentAddDto {
     @NotBlank
     private String name;
     private String phoneNumber;
+
+    @NotBlank
+    private Semester semester;
 
     @NotBlank
     private Long teacherId;
