@@ -91,7 +91,9 @@ public class RecordService {
 
         double score = scoreInputDto.getScore();
 
-        Record record = new Record(score, semester, targetStudent);
+        // Record 내부에 create 메서드 추가
+//        Record record = new Record(score, semester, targetStudent);
+        Record record = Record.createRecord(score, semester, targetStudent);
 
         // rank 입력 로직
         record = rankPolicyServiceMap.get("RankRecordPolicyService").setRecordByPolicy(record);

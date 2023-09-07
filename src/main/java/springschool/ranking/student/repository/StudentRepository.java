@@ -2,6 +2,7 @@ package springschool.ranking.student.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import springschool.ranking.Semester;
 import springschool.ranking.exception.repository.NoSuchIdInDbException;
 import springschool.ranking.student.domain.Student;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class StudentRepository {
 
     private final StudentJpaRepository studentJpaRepository;

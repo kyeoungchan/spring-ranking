@@ -1,8 +1,6 @@
 package springschool.ranking.record.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import springschool.ranking.Semester;
 import springschool.ranking.student.domain.Student;
 
@@ -10,17 +8,18 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "record_table")
 public class Record {
 
     @Id @GeneratedValue
-    @Column(name = "rank_id")
+    @Column(name = "record_id")
     private Long id;
 
-    private double score; // 점수
-    private long rank; // 등수. update 시 반영
-    private int grade; // 등급. update 시 반영
-    private double rate; // 백분율. update 시 반영
+    private Double score; // 점수
+
+    private Long rank; // 등수. update 시 반영
+    private Integer grade; // 등급. update 시 반영
+    private Double rate; // 백분율. update 시 반영
 
     @Embedded // 값 타입
     private Semester semester;
@@ -29,10 +28,21 @@ public class Record {
     @JoinColumn(name = "student_id")
     private Student student;
 
+/*
     public Record(double score, Semester semester, Student student) {
         this.score = score;
         this.semester = semester;
         this.student = student;
+    }
+*/
+
+    // Record 내부에 create 메서드 추가
+    public static Record createRecord(double score, Semester semester, Student student) {
+        Record record = new Record();
+        record.score = score;
+        record.semester = semester;
+        record.student = student;
+        return record;
     }
 
     public void updateScore(double score) {

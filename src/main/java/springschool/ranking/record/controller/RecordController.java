@@ -8,7 +8,6 @@ import springschool.ranking.record.service.RecordService;
 import springschool.ranking.record.service.dto.ScoreInputDto;
 import springschool.ranking.record.service.dto.partial.PartialRecordDto;
 import springschool.ranking.record.service.dto.partial.PartialRecordListDto;
-import springschool.ranking.student.service.StudentService;
 
 @Slf4j
 @RestController
@@ -56,6 +55,8 @@ public class RecordController {
      */
     @PostMapping("/{studentId}/inputRecord/v1")
     PartialRecordDto saveRecordV1(@PathVariable Long studentId, @RequestBody ScoreInputDto scoreInputDto) {
+        scoreInputDto.setStudentId(studentId);
+        recordService.inputRank(scoreInputDto);
         return checkRankOneV1(studentId);
     }
 }

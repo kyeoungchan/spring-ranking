@@ -32,10 +32,13 @@ public class StudentService {
 
         Member teacher = memberRepository.findById(addDto.getTeacherId());
 
+/*
         Student student = new Student();
         Student createdStudent = student.createStudent(name, phoneNumber, teacher);
 
         return studentRepository.save(createdStudent);
+*/
+        return studentRepository.save(Student.createStudent(name, phoneNumber, teacher));
     }
 
     /**

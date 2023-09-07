@@ -2,16 +2,18 @@ package springschool.ranking;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
 @Data
 @AllArgsConstructor // 생성자
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // 임베디드 타입도 기본 생성자가 필요하다.
+@NoArgsConstructor // 임베디드 타입도 기본 생성자가 필요하다.
 public class Semester {
-    private int year;
-    private int semester;
+    @Column(name = "semester_year")
+    private Integer year;
+    private Integer semester;
 
     @Override
     public boolean equals(Object o) {
