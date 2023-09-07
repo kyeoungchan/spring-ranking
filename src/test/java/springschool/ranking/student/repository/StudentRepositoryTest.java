@@ -1,10 +1,12 @@
 package springschool.ranking.student.repository;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import springschool.ranking.Semester;
+import springschool.ranking.exception.repository.NoSuchIdInDbException;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
 import springschool.ranking.student.domain.Student;
@@ -12,6 +14,7 @@ import springschool.ranking.student.domain.Student;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -139,6 +142,7 @@ class StudentRepositoryTest {
     }
 
     @Test
+    @DisplayName("삭제를 한 데이터에서 id로 조회를 시도하면 NoSuchIdInDbException 예외를 던진다.")
     void deleteOne() {
 
         // given
@@ -160,6 +164,9 @@ class StudentRepositoryTest {
         // then
         assertThat(students.size()).isEqualTo(1);
         assertThat(students).doesNotContain(student1);
+
+        studentRepository.deleteOne(student2.getId());
+        assertThatThrownBy(() -> studentRepository.findById(student2.getId())).isInstanceOf(NoSuchIdInDbException.class);
 
     }
 
