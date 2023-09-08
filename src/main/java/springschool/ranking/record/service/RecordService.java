@@ -77,16 +77,16 @@ public class RecordService {
         // Record 내부에 create 메서드 추가
         Record record = Record.createRecord(score, semester, targetStudent);
 
-        rankPolicyServiceMap.get(RecordPolicyConst.rankPolicy).setRecordByPolicy(record);
-        log.info("rank 입력 로직. record.getRank={}, policy={}", record.getRank(), rankPolicyServiceMap.get(RecordPolicyConst.rankPolicy));
+        rankPolicyServiceMap.get(RecordPolicyConst.rankPolicy).setRecordByPolicy(record, semester);
+        log.info("rank 입력 로직. record.getRank={}, policy={}, 학년={}, 학기={}", record.getRank(), rankPolicyServiceMap.get(RecordPolicyConst.rankPolicy), semester.getYear(), semester.getSemester());
 
-        rankPolicyServiceMap.get(RecordPolicyConst.gradePolicy).setRecordByPolicy(record);
-        log.info("grade 입력 로직. record.getGrade={}, policy={}", record.getGrade(), rankPolicyServiceMap.get(RecordPolicyConst.gradePolicy));
+        rankPolicyServiceMap.get(RecordPolicyConst.gradePolicy).setRecordByPolicy(record, semester);
+        log.info("grade 입력 로직. record.getGrade={}, policy={}, 학년={}, 학기={}", record.getGrade(), rankPolicyServiceMap.get(RecordPolicyConst.gradePolicy), semester.getYear(), semester.getSemester());
 
-        rankPolicyServiceMap.get(RecordPolicyConst.ratePolicy).setRecordByPolicy(record);
-        log.info("rate 입력 로직. record.getRate={}, policy={}", record.getRank(), rankPolicyServiceMap.get(RecordPolicyConst.ratePolicy));
+        rankPolicyServiceMap.get(RecordPolicyConst.ratePolicy).setRecordByPolicy(record, semester);
+        log.info("rate 입력 로직. record.getRate={}, policy={}, 학년={}, 학기={}", record.getRank(), rankPolicyServiceMap.get(RecordPolicyConst.ratePolicy), semester.getYear(), semester.getSemester());
 
-        log.info("***record 결과*** rank={}, grade={}, rate={}", record.getRank(), record.getGrade(), record.getRate());
+        log.info("***record 결과*** rank={}, grade={}, rate={}, 학년={}, 학기={}", record.getRank(), record.getGrade(), record.getRate(), semester.getYear(), semester.getSemester());
         return recordRepository.save(record);
     }
 
@@ -124,6 +124,7 @@ public class RecordService {
      * 해당 학기 성적 순으로 학생들 정렬
      */
     public PartialRecordListDto sortRank() {
+        log.info("Record 서비스 sorRank 메서드 policy={}, semester={}", policyHolder.get(), semesterHolder.get());
         return rankPolicyServiceMap.get(policyHolder.get()).sortRecord(semesterHolder.get());
     }
 

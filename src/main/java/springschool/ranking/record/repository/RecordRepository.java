@@ -1,6 +1,7 @@
 package springschool.ranking.record.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import springschool.ranking.Semester;
@@ -12,6 +13,7 @@ import springschool.ranking.student.domain.Student;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 @Transactional
@@ -38,7 +40,7 @@ public class RecordRepository {
 
         return recordJpaRepository.findAllWithStudentTeacher()
                 .stream()
-                .filter(r -> r.getStudent().getCurSemester().equals(semester))
+                .filter(r -> r.getSemester().equals(semester))
                 .collect(Collectors.toList());
     }
 
@@ -67,44 +69,16 @@ public class RecordRepository {
         return recordJpaRepository.findAll();
     }
 
+    /**
+     * 아무 연관 관계를 고려하지 않지만 학기에 맞춰서 반환해주는 메서드
+     */
+    public List<Record> findAllBySemester(Semester semester) {
+        log.info("findAllBy semester={}", semester);
+        return recordJpaRepository.findAllBySemester(semester.getYear(), semester.getSemester());
+    }
+
     public List<Record> saveAll(List<Record> records) {
         return recordJpaRepository.saveAll(records);
     }
-
-
-
-/*
-    public List<Order> findAllWithMemberDelivery() {
-        return em.createQuery(
-                "select o from Order o" +
-                        " join fetch o.member m" +
-                        " join fetch o.delivery d", Order.class
-        ).getResultList();
-    }
-*/
-
-/*
-    List<OrderItemQueryDto> orderItems = em.createQuery(
-                    "select new jpabook.jpashop.repository.order.query.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count)" +
-                            " from OrderItem oi" +
-                            " join oi.item i" +
-                            " where oi.order.id in :orderIds", OrderItemQueryDto.class)
-            .setParameter("orderIds", orderIds)
-            .getResultList();
-
-    Map<Long, List<OrderItemQueryDto>> orderItemMap = orderItems.stream()
-            .collect(Collectors.groupingBy(orderItemQueryDto -> orderItemQueryDto.getOrderId()));
-    // orderItemQueryDto -> orderItemQueryDto.getOrderId()는 OrderItemQueryDto::getOrderId 이렇게 변경 가능
-    return orderItemMap;
-*/
-
-/*
-    private static List<Long> toOrderIds(List<OrderQueryDto> result) {
-        List<Long> orderIds = result.stream()
-                .map(o -> o.getOrderId())
-                .collect(Collectors.toList());
-        return orderIds;
-    }
-*/
 
 }

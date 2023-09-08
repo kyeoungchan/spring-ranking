@@ -9,9 +9,9 @@ public interface RecordPolicyService {
 
     /**
      * 성적 입력 메서드
-     * 각 정책별로 성적의 값이 달라지므로 정책별로 호출돼야한다.
+     * 각 정책별로, 학기별로 성적의 값이 달라지므로 정책별로 호출돼야한다.
      */
-    Record setRecordByPolicy(Record record);
+    Record setRecordByPolicy(Record record, Semester semester);
 
     /**
      * 해당 학생의 해당 학기를 정책 별로 세분화한 성적 반환

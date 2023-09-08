@@ -27,10 +27,10 @@ public class GradeRecordPolicyService implements RecordPolicyService {
     private final RecordRepository recordRepository;
 
     @Override
-    public Record setRecordByPolicy(Record record) {
+    public Record setRecordByPolicy(Record record, Semester semester) {
 
         // 해당 학기의 Rank 객체 리스트 추출
-        List<Record> records = recordRepository.findAllSimply();
+        List<Record> records = recordRepository.findAllBySemester(semester);
 
         innerSorting(records, record);
 
@@ -53,7 +53,7 @@ public class GradeRecordPolicyService implements RecordPolicyService {
     @Override
     public PartialRecordListDto sortRecord(Semester semester) {
 
-        log.info("등급 정렬 메서드 실행. 학기={}", semester);
+        log.info("등급 정책 정렬 메서드 실행. 학기={}", semester);
 
         List<Record> records = recordRepository.findAllWithStudentTeacherBySemester(semester);
 

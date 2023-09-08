@@ -245,4 +245,34 @@ class RecordRepositoryTest {
         assertThat(findRecords).isEqualTo(recordRepository.findAllSimply());
 
     }
+
+    @Test
+    void findAllBySemester() {
+        // given
+        Member teacher = Member.createMember("teacherId", "teacherPW", "t1");
+        memberRepository.save(teacher);
+
+        Semester semester11 = new Semester(1, 1);
+        Student student1 = Student.createStudent("s1", "01000000", semester11, teacher);
+        studentRepository.save(student1);
+
+        Semester semester21 = new Semester(2, 1);
+        Student student2 = Student.createStudent("s2", "01000000", semester21, teacher);
+        studentRepository.save(student2);
+
+        double score = 100.0;
+        Record record1 = Record.createRecord(score, semester11, student1);
+        Record record2 = Record.createRecord(score, semester21, student2);
+
+        recordRepository.save(record1);
+        recordRepository.save(record2);
+
+        // when
+        List<Record> ranks1 = recordRepository.findAllBySemester(semester11);
+        List<Record> ranks2 = recordRepository.findAllBySemester(semester21);
+
+        // then
+        assertThat(ranks1.get(0)).isEqualTo(record1);
+        assertThat(ranks2.get(0).getStudent().getName()).isEqualTo("s2");
+    }
 }

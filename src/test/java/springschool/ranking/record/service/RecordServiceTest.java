@@ -1,5 +1,6 @@
 package springschool.ranking.record.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,11 +9,9 @@ import springschool.ranking.Semester;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
 import springschool.ranking.record.Policy;
+import springschool.ranking.record.domain.Record;
 import springschool.ranking.record.service.dto.ScoreInputDto;
-import springschool.ranking.record.service.dto.partial.PartialGradeRecordDto;
-import springschool.ranking.record.service.dto.partial.PartialRankRecordDto;
-import springschool.ranking.record.service.dto.partial.PartialRateRecordDto;
-import springschool.ranking.record.service.dto.partial.PartialRecordDto;
+import springschool.ranking.record.service.dto.partial.*;
 import springschool.ranking.record.service.policy.GradeRecordPolicyService;
 import springschool.ranking.record.service.policy.RankRecordPolicyService;
 import springschool.ranking.record.service.policy.RateRecordPolicyService;
@@ -31,6 +30,15 @@ class RecordServiceTest {
     @Autowired RankRecordPolicyService recordPolicyService;
     @Autowired RateRecordPolicyService rateRecordPolicyService;
     @Autowired GradeRecordPolicyService gradeRecordPolicyService;
+
+    /**
+     * 쓰레드 로컬 초기화용 메서드
+     */
+    @BeforeEach
+    void beforeEach() {
+        recordService.setSemester(new Semester(1, 1));
+        recordService.setRankPolicy(Policy.RANK);
+    }
 
     @Test
     void inputRecord() {
@@ -183,7 +191,6 @@ class RecordServiceTest {
         recordService.inputRecord(scoreInputDto6);
 
         // when
-
         recordService.setSemester(semester);
 
         // then
@@ -212,30 +219,104 @@ class RecordServiceTest {
     @Test
     void sortRank() {
         // given
+        Semester semester = new Semester(1, 1);
+        Semester semester2 = new Semester(2, 1);
+
+        Member teacher = Member.createMember("teacherId", "teacherPW", "t1");
+        memberRepository.save(teacher);
+
+        // 3 학생들은 모두 2학년이라고 가정
+        Student student1 = Student.createStudent("s1", "01000000", semester2, teacher);
+        Student student2 = Student.createStudent("s2", "01000230", semester2, teacher);
+        Student student3 = Student.createStudent("s3", "01000234", semester2, teacher);
+        studentRepository.save(student1);
+        studentRepository.save(student2);
+        studentRepository.save(student3);
+
+        // 1학년 1학기 점수 입력
+        ScoreInputDto scoreInputDto1 = new ScoreInputDto(student1.getId(), student1.getName(), semester.getYear(), semester.getSemester(), 100.0);
+        ScoreInputDto scoreInputDto2 = new ScoreInputDto(student2.getId(), student2.getName(), semester.getYear(), semester.getSemester(), 90.0);
+        ScoreInputDto scoreInputDto3 = new ScoreInputDto(student3.getId(), student3.getName(), semester.getYear(), semester.getSemester(), 80.0);
+
+        recordService.inputRecord(scoreInputDto1);
+        recordService.inputRecord(scoreInputDto2);
+        recordService.inputRecord(scoreInputDto3);
+
+        // 2학년 1학기 점수 입력. 세 학생은 역전이 일어났다.
+        ScoreInputDto scoreInputDto4 = new ScoreInputDto(student1.getId(), student1.getName(), semester2.getYear(), semester2.getSemester(), 80.0);
+        ScoreInputDto scoreInputDto5 = new ScoreInputDto(student2.getId(), student2.getName(), semester2.getYear(), semester2.getSemester(), 90.0);
+        ScoreInputDto scoreInputDto6 = new ScoreInputDto(student3.getId(), student3.getName(), semester2.getYear(), semester2.getSemester(), 100.0);
+
+        recordService.inputRecord(scoreInputDto4);
+        recordService.inputRecord(scoreInputDto5);
+        recordService.inputRecord(scoreInputDto6);
 
         // when
+        PartialRecordListDto dto1 = recordService.sortRank();
 
         // then
+        recordService.setSemester(semester2);
+        PartialRecordListDto dto2 = recordService.sortRank();
 
-    }
-
-    @Test
-    void findRank() {
-        // given
-
-        // when
-
-        // then
+        assertThat(dto1.getCount()).isEqualTo(3);
+        assertThat(dto2.getCount()).isEqualTo(3);
 
     }
 
     @Test
     void findRankOneWithSemester() {
         // given
+        Semester semester = new Semester(1, 1);
+        Semester semester2 = new Semester(2, 1);
+
+        Member teacher = Member.createMember("teacherId", "teacherPW", "t1");
+        memberRepository.save(teacher);
+
+        // 3 학생들은 모두 2학년이라고 가정
+        Student student1 = Student.createStudent("s1", "01000000", semester2, teacher);
+        Student student2 = Student.createStudent("s2", "01000230", semester2, teacher);
+        Student student3 = Student.createStudent("s3", "01000234", semester2, teacher);
+        studentRepository.save(student1);
+        studentRepository.save(student2);
+        studentRepository.save(student3);
+
+        // 1학년 1학기 점수 입력
+        ScoreInputDto scoreInputDto1 = new ScoreInputDto(student1.getId(), student1.getName(), semester.getYear(), semester.getSemester(), 100.0);
+        ScoreInputDto scoreInputDto2 = new ScoreInputDto(student2.getId(), student2.getName(), semester.getYear(), semester.getSemester(), 90.0);
+        ScoreInputDto scoreInputDto3 = new ScoreInputDto(student3.getId(), student3.getName(), semester.getYear(), semester.getSemester(), 80.0);
+
+        Record record1 = recordService.inputRecord(scoreInputDto1);
+        Record record2 = recordService.inputRecord(scoreInputDto2);
+        Record record3 = recordService.inputRecord(scoreInputDto3);
+
+        // 2학년 1학기 점수 입력. 세 학생은 역전이 일어났다.
+        ScoreInputDto scoreInputDto4 = new ScoreInputDto(student1.getId(), student1.getName(), semester2.getYear(), semester2.getSemester(), 80.0);
+        ScoreInputDto scoreInputDto5 = new ScoreInputDto(student2.getId(), student2.getName(), semester2.getYear(), semester2.getSemester(), 90.0);
+        ScoreInputDto scoreInputDto6 = new ScoreInputDto(student3.getId(), student3.getName(), semester2.getYear(), semester2.getSemester(), 100.0);
+
+        Record record4 = recordService.inputRecord(scoreInputDto4);
+        Record record5 = recordService.inputRecord(scoreInputDto5);
+        Record record6 = recordService.inputRecord(scoreInputDto6);
 
         // when
+        // 현재는 1학년 1학기
+        Record findRecord1 = recordService.findRankOneWithSemester(student1.getId());
+        Record findRecord2 = recordService.findRankOneWithSemester(student2.getId());
+        Record findRecord3 = recordService.findRankOneWithSemester(student3.getId());
+
+        // 2학년 1학기로 적용
+        recordService.setSemester(semester2);
+        Record findRecord4 = recordService.findRankOneWithSemester(student1.getId());
+        Record findRecord5 = recordService.findRankOneWithSemester(student2.getId());
+        Record findRecord6 = recordService.findRankOneWithSemester(student3.getId());
 
         // then
+        assertThat(findRecord1).isEqualTo(record1);
+        assertThat(findRecord2).isEqualTo(record2);
+        assertThat(findRecord3).isEqualTo(record3);
+        assertThat(findRecord4).isEqualTo(record4);
+        assertThat(findRecord5).isEqualTo(record5);
+        assertThat(findRecord6).isEqualTo(record6);
 
     }
 }

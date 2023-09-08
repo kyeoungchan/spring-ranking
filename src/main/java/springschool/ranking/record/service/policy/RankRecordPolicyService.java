@@ -27,10 +27,10 @@ public class RankRecordPolicyService implements RecordPolicyService {
     private final RecordRepository recordRepository;
 
     @Override
-    public Record setRecordByPolicy(Record record) {
+    public Record setRecordByPolicy(Record record, Semester semester) {
 
         // 해당 학기의 Rank 객체 리스트 추출
-        List<Record> records = recordRepository.findAllSimply();
+        List<Record> records = recordRepository.findAllBySemester(semester);
 
         innerSorting(records, record);
 
@@ -52,11 +52,13 @@ public class RankRecordPolicyService implements RecordPolicyService {
     @Override
     public PartialRecordListDto sortRecord(Semester semester) {
 
-        log.info("등급 정렬 메서드 실행. 학기={}", semester);
+        log.info("등수 정책 정렬 메서드 실행. 학기={}", semester);
 
         List<Record> records = recordRepository.findAllWithStudentTeacherBySemester(semester);
+        log.info("records={}", records);
 
         List<Record> sortedRecords = innerSorting(records, null);
+        log.info("sortedRecords={}", sortedRecords);
 
         PartialRecordListDto result = new PartialRecordListDto(Policy.RANK, sortedRecords.size());
 
@@ -69,6 +71,7 @@ public class RankRecordPolicyService implements RecordPolicyService {
                         s.getRank())
                 ));
 
+        log.info("result={}", result);
         return result;
     }
 
