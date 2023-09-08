@@ -1,5 +1,6 @@
 package springschool.ranking.record.service.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
  * 점수 입력을 위한 DTO
  */
 @Data
+@AllArgsConstructor
 public class ScoreInputDto {
 
     private Long studentId;

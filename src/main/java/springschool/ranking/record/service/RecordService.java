@@ -36,7 +36,13 @@ public class RecordService {
      */
     @PostConstruct
     private void initHolders() {
-        policyHolder.set("ScoreRankPolicyService");
+
+        log.info("스프링 빈 확인 studentRepository={} / recordRepository={} / rankPolicyServiceMap={}",
+                studentRepository,
+                recordRepository,
+                rankPolicyServiceMap);
+
+        policyHolder.set("rankRecordPolicyService");
         log.info("Init Policy={}", policyHolder.get());
 
         semesterHolder.set(new Semester(1, 1));
@@ -54,32 +60,11 @@ public class RecordService {
     }
 
     /**
-     * 해당 학기 학생 석차 조회
-     */
-    public PartialRecordDto getRankOne(Long studentId) {
-        return rankPolicyServiceMap.get(policyHolder).getPartialRecordOne(studentId, semesterHolder.get());
-    }
-
-    /**
-     * 성적 산출 정책을 선택하는 로직
-     */
-    public void setRankPolicy(Policy policy) {
-        if (policy.equals(Policy.RANK)) {
-            policyHolder.set("ScoreRankPolicyService");
-        } else if (policy.equals(Policy.GRADE)) {
-            policyHolder.set("GradeRankPolicyService");
-        } else {
-            policyHolder.set("RateRankPolicyService");
-        }
-        log.info("Current Policy={}", policyHolder.get());
-    }
-
-    /**
      * 학생의 점수를 입력하는 로직
      * PutMapping 으로 호출한다.
      */
     @Transactional // readOnly = false 로 변경
-    public Record inputRank(ScoreInputDto scoreInputDto) {
+    public Record inputRecord(ScoreInputDto scoreInputDto) {
 
         Long studentId = scoreInputDto.getStudentId();
         Semester semester = new Semester(scoreInputDto.getYear(), scoreInputDto.getSemester());
@@ -92,16 +77,38 @@ public class RecordService {
 //        Record record = new Record(score, semester, targetStudent);
         Record record = Record.createRecord(score, semester, targetStudent);
 
-        // rank 입력 로직
-        record = rankPolicyServiceMap.get("RankRecordPolicyService").setRecordByPolicy(record);
+        rankPolicyServiceMap.get("rankRecordPolicyService").setRecordByPolicy(record);
+        log.info("rank 입력 로직. record.getRank={}, policy={}", record.getRank(), rankPolicyServiceMap.get("rankRecordPolicyService"));
 
-        // grade 입력 로직
-        record = rankPolicyServiceMap.get("GradeRecordPolicyService").setRecordByPolicy(record);
+        rankPolicyServiceMap.get("gradeRecordPolicyService").setRecordByPolicy(record);
+        log.info("grade 입력 로직. record.getGrade={}, policy={}", record.getGrade(), rankPolicyServiceMap.get("gradeRecordPolicyService"));
 
-        // rate 입력 로직
-        record = rankPolicyServiceMap.get("RateRecordPolicyService").setRecordByPolicy(record);
+        rankPolicyServiceMap.get("rateRecordPolicyService").setRecordByPolicy(record);
+        log.info("rate 입력 로직. record.getRate={}, policy={}", record.getRank(), rankPolicyServiceMap.get("rateRecordPolicyService"));
 
+        log.info("***record 결과*** rank={}, grade={}, rate={}", record.getRank(), record.getGrade(), record.getRate());
         return recordRepository.save(record);
+    }
+
+    /**
+     * 해당 학기 학생 석차 조회
+     */
+    public PartialRecordDto getRankOne(Long studentId) {
+        return rankPolicyServiceMap.get(policyHolder).getPartialRecordOne(studentId, semesterHolder.get());
+    }
+
+    /**
+     * 성적 산출 정책을 선택하는 로직
+     */
+    public void setRankPolicy(Policy policy) {
+        if (policy.equals(Policy.RANK)) {
+            policyHolder.set("rankRecordPolicyService");
+        } else if (policy.equals(Policy.GRADE)) {
+            policyHolder.set("gradeRankPolicyService");
+        } else {
+            policyHolder.set("rateRankPolicyService");
+        }
+        log.info("Current Policy={}", policyHolder.get());
     }
 
     /**

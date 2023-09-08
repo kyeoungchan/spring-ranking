@@ -27,14 +27,6 @@ public class Record {
     @JoinColumn(name = "student_id")
     private Student student;
 
-/*
-    public Record(double score, Semester semester, Student student) {
-        this.score = score;
-        this.semester = semester;
-        this.student = student;
-    }
-*/
-
     // Record 내부에 create 메서드 추가
     public static Record createRecord(double score, Semester semester, Student student) {
         Record record = new Record();

@@ -3,6 +3,7 @@ package springschool.ranking.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import springschool.ranking.aop.Retry;
 import springschool.ranking.commondto.StudentCheckElementDto;
 import springschool.ranking.commondto.StudentCheckListDto;
 import springschool.ranking.member.domain.Member;
@@ -33,19 +34,6 @@ public class MemberService {
         return memberRepository.findById(memberId);
     }
 
-    public StudentCheckListDto checkStudentsByMember(Member member) {
-        List<Student> students = studentRepository.findAllByMember(member);
-
-        StudentCheckListDto result = new StudentCheckListDto();
-        result.setCount(students.size());
-
-        for (Student s : students) {
-            result.getStudents().add(new StudentCheckElementDto(s.getId(), s.getName()));
-        }
-
-        return result;
-    }
-
     @Transactional
     public void edit(Long memberId, MemberUpdateDto updateDto) {
         Member findMember = memberRepository.findById(memberId);
@@ -64,12 +52,28 @@ public class MemberService {
     /**
      * 5번 로그인 시도 후 실패 시 NoSuchUserIdException 발생
      */
-//    @Retry(5) // 컨트롤러에서 호출해야 한다.
+    @Retry(5) // 컨트롤러에서 호출해야 한다.
     public Member login(String userId, String password) {
         return memberRepository.findByUserId(userId)
                 .filter(m -> m.getPassword().equals(password))
 //                .orElseThrow(NoSuchUserIdException::new);
                 .orElse(null);
+    }
+
+    /**
+     * 해당 회원에 속해있는 학생들 목록 조회
+     */
+    public StudentCheckListDto checkStudentsByMember(Member member) {
+        List<Student> students = studentRepository.findAllByMember(member);
+
+        StudentCheckListDto result = new StudentCheckListDto();
+        result.setCount(students.size());
+
+        for (Student s : students) {
+            result.getStudents().add(new StudentCheckElementDto(s.getId(), s.getName()));
+        }
+
+        return result;
     }
 
 }

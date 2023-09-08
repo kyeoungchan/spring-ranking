@@ -108,10 +108,6 @@ public class MemberController {
         }
 
         // Member의 id에 대한 값은 리포지토리에서 자동 생성한다.
-/*
-        Member registerMember = new Member();
-        registerMember.createMember(memberSaveDto.getUserId(), memberSaveDto.getPassword(), memberSaveDto.getName());~
-*/
         Member registerMember = Member.createMember(memberSaveDto.getUserId(), memberSaveDto.getPassword(), memberSaveDto.getName());
 
         try {

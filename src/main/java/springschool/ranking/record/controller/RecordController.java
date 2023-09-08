@@ -56,7 +56,7 @@ public class RecordController {
     @PostMapping("/{studentId}/inputRecord/v1")
     PartialRecordDto saveRecordV1(@PathVariable Long studentId, @RequestBody ScoreInputDto scoreInputDto) {
         scoreInputDto.setStudentId(studentId);
-        recordService.inputRank(scoreInputDto);
+        recordService.inputRecord(scoreInputDto);
         return checkRankOneV1(studentId);
     }
 }
