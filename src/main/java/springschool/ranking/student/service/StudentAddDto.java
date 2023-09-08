@@ -6,6 +6,7 @@ import springschool.ranking.Semester;
 import javax.validation.constraints.NotBlank;
 
 @Data
+@AllArgsConstructor
 public class StudentAddDto {
 
     @NotBlank
