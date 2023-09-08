@@ -43,6 +43,7 @@ public class GradeRecordPolicyService implements RecordPolicyService {
         Student student = studentRepository.findById(studentId);
         Record record = recordRepository.findRecordByStudentAndSemester(student, semester);
 
+        log.info("student={}, score={}, grade={}", student.getName(), record.getScore(), record.getGrade());
         return new PartialGradeRecordDto(studentId, record.getScore(), semester.getYear(), semester.getSemester(), record.getGrade());
     }
 
@@ -79,16 +80,18 @@ public class GradeRecordPolicyService implements RecordPolicyService {
 
         int total = sortedRecords.size();
 
+        int rank = 0;
         // 등급 세팅 및 저장
         for (int i = 0; i < total; i++) {
-            if (i <= total * 0.04) sortedRecords.get(i).updateGrade(1); // 4% 이하는 1등급
-            else if (i <= total * 0.11) sortedRecords.get(i).updateGrade(2); // 11% 이하는 2등급
-            else if (i <= total * 0.23) sortedRecords.get(i).updateGrade(3); // 23% 이하는 3등급
-            else if (i <= total * 0.40) sortedRecords.get(i).updateGrade(4); // 40% 이하는 4등급
-            else if (i <= total * 0.60) sortedRecords.get(i).updateGrade(5); // 60% 이하는 5등급
-            else if (i <= total * 0.77) sortedRecords.get(i).updateGrade(6); // 77% 이하는 6등급
-            else if (i <= total * 0.89) sortedRecords.get(i).updateGrade(7); // 89% 이하는 7등급
-            else if (i <= total * 0.96) sortedRecords.get(i).updateGrade(8); // 96% 이하는 8등급
+            rank = i + 1;
+            if (rank <= total * 0.04) sortedRecords.get(i).updateGrade(1); // 4% 이하는 1등급
+            else if (rank <= total * 0.11) sortedRecords.get(i).updateGrade(2); // 11% 이하는 2등급
+            else if (rank <= total * 0.23) sortedRecords.get(i).updateGrade(3); // 23% 이하는 3등급
+            else if (rank <= total * 0.40) sortedRecords.get(i).updateGrade(4); // 40% 이하는 4등급
+            else if (rank <= total * 0.60) sortedRecords.get(i).updateGrade(5); // 60% 이하는 5등급
+            else if (rank <= total * 0.77) sortedRecords.get(i).updateGrade(6); // 77% 이하는 6등급
+            else if (rank <= total * 0.89) sortedRecords.get(i).updateGrade(7); // 89% 이하는 7등급
+            else if (rank <= total * 0.96) sortedRecords.get(i).updateGrade(8); // 96% 이하는 8등급
             else sortedRecords.get(i).updateGrade(9); // 나머지는 9등급
         }
 

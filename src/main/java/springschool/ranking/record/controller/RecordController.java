@@ -3,6 +3,7 @@ package springschool.ranking.record.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import springschool.ranking.Semester;
 import springschool.ranking.record.Policy;
 import springschool.ranking.record.service.RecordService;
 import springschool.ranking.record.service.dto.ScoreInputDto;
@@ -30,7 +31,7 @@ public class RecordController {
      */
     @PostMapping("/setting/semester/v1")
     public void selectSemester(int year, int semester) {
-        recordService.setSemester(year, semester);
+        recordService.setSemester(new Semester(year, semester));
     }
 
     /**
@@ -38,7 +39,7 @@ public class RecordController {
      */
     @GetMapping("/{studentId}/v1")
     PartialRecordDto checkRankOneV1(@PathVariable Long studentId) {
-        return recordService.getRankOne(studentId);
+        return recordService.getRankOneByPolicy(studentId);
     }
 
     /**

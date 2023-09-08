@@ -88,7 +88,8 @@ public class RateRecordPolicyService implements RecordPolicyService {
         // 등급 세팅 및 저장
         for (int i = 0; i < total; i++) {
             Record tempRecord = sortedRecords.get(i);
-            tempRecord.updateRate(0.09 * (i + 1)); // 백분율 계산
+//            log.info("계산 착오 잡기. i+1={}, total={}, (i+1)/(double) total={}", i + 1, total, (i + 1) / (double) total);
+            tempRecord.updateRate((1.0 - ((i + 1) / (double) total)) * 100.0); // 백분율 계산
         }
 
         if (record != null)

@@ -8,7 +8,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import springschool.ranking.member.domain.Member;
 import springschool.ranking.member.repository.MemberRepository;
-import springschool.ranking.student.domain.Grade;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.repository.StudentRepository;
 
