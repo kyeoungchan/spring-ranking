@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import springschool.ranking.exception.repository.NoSuchIdInDbException;
 import springschool.ranking.member.domain.Member;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -81,19 +82,34 @@ class MemberRepositoryTest {
         memberRepository.save(member2);
 
         // when
-
+        List<Member> members = memberRepository.findAll();
 
         // then
+        assertThat(members.size()).isEqualTo(2);
+        assertThat(members).containsExactly(member1, member2);
 
     }
 
     @Test
     void findMemberByName() {
         // given
+        Member member1 = Member.createMember("!userId1", "!!userPW", "t1");
+        memberRepository.save(member1);
+        Member member2 = Member.createMember("@userId2", "@@userPW", "t2");
+        memberRepository.save(member2);
+        Member member3 = Member.createMember("!userId2", "!!userPW", "t1");
+        memberRepository.save(member3);
+        Member member4 = Member.createMember("@userId3", "@@userPW", "t2");
+        memberRepository.save(member4);
 
         // when
+        List<Member> t1Members = memberRepository.findMemberByName("t1");
+        List<Member> t2Members = memberRepository.findMemberByName("t2");
 
         // then
+        assertThat(t1Members).containsExactly(member1, member3);
+        assertThat(t2Members).containsExactly(member2, member4);
+        assertThat(t1Members.get(0).getName()).isEqualTo("t1");
 
     }
 
