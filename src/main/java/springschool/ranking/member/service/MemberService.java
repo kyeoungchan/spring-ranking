@@ -12,7 +12,6 @@ import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.repository.StudentRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -52,7 +51,7 @@ public class MemberService {
     /**
      * 5번 로그인 시도 후 실패 시 NoSuchUserIdException 발생
      */
-    @Retry(5) // 컨트롤러에서 호출해야 한다.
+//    @Retry(5) // 컨트롤러에서 호출해야 한다.
     public Member login(String userId, String password) {
         return memberRepository.findByUserId(userId)
                 .filter(m -> m.getPassword().equals(password))
