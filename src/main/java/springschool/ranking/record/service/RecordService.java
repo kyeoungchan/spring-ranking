@@ -29,36 +29,7 @@ public class RecordService {
     private final StudentRepository studentRepository;
     private final RecordRepository recordRepository;
     private final Map<String, RecordPolicyService> rankPolicyServiceMap;
-    private ThreadLocal<String> policyHolder = new ThreadLocal<>();
-    private ThreadLocal<Semester> semesterHolder = new ThreadLocal<>();
-
-    /**
-     * 디폴트 정책은 ScoreRankPolicy 로 지정한다.
-     */
-    @PostConstruct
-    private void initHolders() {
-
-        log.info("스프링 빈 확인 studentRepository={} / recordRepository={} / rankPolicyServiceMap={}",
-                studentRepository,
-                recordRepository,
-                rankPolicyServiceMap);
-
-        policyHolder.set(RecordPolicyConst.rankPolicy);
-        log.info("Init Policy={}", policyHolder.get());
-
-        semesterHolder.set(new Semester(1, 1));
-        log.info("Init Semester={}", semesterHolder.get());
-    }
-
-    /**
-     * 쓰레드 로컬은 요청이 끝나면 꼭 remove() 를 호출해야 한다.
-     */
-    @PreDestroy
-    private void flushPolicyHolder() {
-        log.info("***Destroying PolicyHolder and SemesterHolder***");
-        policyHolder.remove();
-        semesterHolder.remove();
-    }
+    private final PolicySemesterHolder holder;
 
     /**
      * 학생의 점수를 입력하는 로직
@@ -94,8 +65,8 @@ public class RecordService {
      * 해당 학기 학생 석차 조회
      */
     public PartialRecordDto getRankOneByPolicy(Long studentId) {
-        log.info("석차 조회. 학생 id={} / 정책={} / 학년={}, 학기={}", studentId, policyHolder.get(), semesterHolder.get().getYear(), semesterHolder.get().getYear());
-        return rankPolicyServiceMap.get(policyHolder.get()).getPartialRecordOne(studentId, semesterHolder.get());
+        log.info("석차 조회. 학생 id={} / 정책={} / 학년={}, 학기={}", studentId, holder.policyHolder.get(), holder.semesterHolder.get().getYear(), holder.semesterHolder.get().getYear());
+        return rankPolicyServiceMap.get(holder.policyHolder.get()).getPartialRecordOne(studentId, holder.semesterHolder.get());
     }
 
     /**
@@ -103,13 +74,13 @@ public class RecordService {
      */
     public void setRankPolicy(Policy policy) {
         if (policy.equals(Policy.RANK)) {
-            policyHolder.set(RecordPolicyConst.rankPolicy);
+            holder.policyHolder.set(RecordPolicyConst.rankPolicy);
         } else if (policy.equals(Policy.GRADE)) {
-            policyHolder.set(RecordPolicyConst.gradePolicy);
+            holder.policyHolder.set(RecordPolicyConst.gradePolicy);
         } else {
-            policyHolder.set(RecordPolicyConst.ratePolicy);
+            holder.policyHolder.set(RecordPolicyConst.ratePolicy);
         }
-        log.info("Current Policy={}", policyHolder.get());
+        log.info("Current Policy={}", holder.policyHolder.get());
     }
 
     /**
@@ -117,15 +88,15 @@ public class RecordService {
      * DB에 접근하는 로직이 아니므로 readOnly = true
      */
     public void setSemester(Semester semester) {
-        semesterHolder.set(semester);
+        holder.semesterHolder.set(semester);
     }
 
     /**
      * 해당 학기 성적 순으로 학생들 정렬
      */
     public PartialRecordListDto sortRank() {
-        log.info("Record 서비스 sorRank 메서드 policy={}, semester={}", policyHolder.get(), semesterHolder.get());
-        return rankPolicyServiceMap.get(policyHolder.get()).sortRecord(semesterHolder.get());
+        log.info("Record 서비스 sorRank 메서드 policy={}, semester={}", holder.policyHolder.get(), holder.semesterHolder.get());
+        return rankPolicyServiceMap.get(holder.policyHolder.get()).sortRecord(holder.semesterHolder.get());
     }
 
     /**
@@ -141,6 +112,6 @@ public class RecordService {
      */
     public Record findRankOneWithSemester(Long studentId) {
         Student student = studentRepository.findById(studentId);
-        return recordRepository.findRecordByStudentAndSemester(student, semesterHolder.get());
+        return recordRepository.findRecordByStudentAndSemester(student, holder.semesterHolder.get());
     }
 }
