@@ -43,7 +43,8 @@ public class StudentController {
         log.info("학생등록 성공 로직 실행");
 
         Student registeredStudent = studentService.register(addDto);
-        return checkV1(registeredStudent.getId());
+//        return checkV1(registeredStudent.getId());
+        return new StudentCheckDto(registeredStudent.getName(), registeredStudent.getPhoneNumber(), registeredStudent.getTeacher().getName());
     }
 
     /**

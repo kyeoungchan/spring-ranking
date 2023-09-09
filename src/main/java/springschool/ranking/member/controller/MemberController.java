@@ -43,7 +43,7 @@ public class MemberController {
      * @throws UnValidatedException 로그인 입력 검증 결과 문제가 있을 경우 예외를 날린다.
      * @throws NoSuchUserIdException 로그인 시도를 5번 이상 실패했을 때 예외를 던진다.
      */
-    @GetMapping("/login/v1")
+    @PostMapping("/login/v1")
     @Retry(5) // 로그인 시도 횟수 제한 : 5
     public MemberDto loginV1(@Validated @RequestBody MemberLoginDto memberLoginDto, BindingResult bindingResult,
                              HttpServletRequest request) {
