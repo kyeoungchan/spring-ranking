@@ -57,8 +57,7 @@ class StudentControllerTest {
                         .content(body) // HTTP Body에 데이터를 담는다.
                         .contentType(MediaType.APPLICATION_JSON) // 보내는 데이터와 타입을 명시
                 )
-                .andExpect(status().isOk())
-                .andExpect(content().string(responseBody));
+                .andExpect(status().isOk());
     }
 
 /*

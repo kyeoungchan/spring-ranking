@@ -6,3 +6,15 @@
 1694228083669|0|statement|connection 48|url jdbc:h2:mem:5dfbf4f8-a76a-4b7c-a1a0-075e84575bd3|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
 1694228083669|0|statement|connection 48|url jdbc:h2:mem:5dfbf4f8-a76a-4b7c-a1a0-075e84575bd3|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
 1694228083669|0|statement|connection 48|url jdbc:h2:mem:5dfbf4f8-a76a-4b7c-a1a0-075e84575bd3|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1694311885100|0|statement|connection 48|url jdbc:h2:mem:87a0fe76-600a-44f8-bd08-ff2743d3031e|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1694311885101|0|statement|connection 48|url jdbc:h2:mem:87a0fe76-600a-44f8-bd08-ff2743d3031e|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
+1694311885101|0|statement|connection 48|url jdbc:h2:mem:87a0fe76-600a-44f8-bd08-ff2743d3031e|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
+1694311885102|0|statement|connection 48|url jdbc:h2:mem:87a0fe76-600a-44f8-bd08-ff2743d3031e|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1694311907751|0|statement|connection 48|url jdbc:h2:mem:da4626d5-90ba-40bb-b223-ce6bf8758558|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1694311907752|0|statement|connection 48|url jdbc:h2:mem:da4626d5-90ba-40bb-b223-ce6bf8758558|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
+1694311907753|0|statement|connection 48|url jdbc:h2:mem:da4626d5-90ba-40bb-b223-ce6bf8758558|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
+1694311907753|0|statement|connection 48|url jdbc:h2:mem:da4626d5-90ba-40bb-b223-ce6bf8758558|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1694312089319|0|statement|connection 48|url jdbc:h2:mem:e2575d49-0754-422f-9776-87779bf670d4|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1694312089320|0|statement|connection 48|url jdbc:h2:mem:e2575d49-0754-422f-9776-87779bf670d4|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
+1694312089321|0|statement|connection 48|url jdbc:h2:mem:e2575d49-0754-422f-9776-87779bf670d4|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
+1694312089321|0|statement|connection 48|url jdbc:h2:mem:e2575d49-0754-422f-9776-87779bf670d4|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence

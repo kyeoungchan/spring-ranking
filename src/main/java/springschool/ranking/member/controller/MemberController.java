@@ -65,7 +65,7 @@ public class MemberController {
             throw new NoSuchUserIdException("아이디 또는 비밀번호를 다시 확인해주세요.");
         }
 
-        log.info("성공 로직 실행");
+        log.info("로그인 성공! 세션 처리 시작");
         // 세션 처리
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);

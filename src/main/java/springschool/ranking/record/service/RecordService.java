@@ -16,8 +16,6 @@ import springschool.ranking.record.service.policy.RecordPolicyService;
 import springschool.ranking.student.domain.Student;
 import springschool.ranking.student.repository.StudentRepository;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.Map;
 
 @Slf4j

@@ -21,7 +21,7 @@ public class ThreadLocalAspect {
     @Around("execution(* springschool.ranking.record.service.RecordService.*(..))")
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
 
-        if (holder.policyHolder.get() == null){
+        if (holder.policyHolder.get() == null) {
             holder.policyHolder.set(RecordPolicyConst.rankPolicy);
             log.info("AOP 적용. RankPolicy");
         }
@@ -44,7 +44,7 @@ public class ThreadLocalAspect {
 
         if ( holder.policyHolder.get() != null)
             holder.policyHolder.remove();
-        if (holder.semesterHolder.get()!=null)
+        if (holder.semesterHolder.get() != null)
             holder.semesterHolder.remove();
         return result;
     }
