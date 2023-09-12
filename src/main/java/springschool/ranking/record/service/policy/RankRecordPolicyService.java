@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
+//@Transactional
 public class RankRecordPolicyService implements RecordPolicyService {
 
     private final StudentRepository studentRepository;

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-@Transactional
+//@Transactional
 public class RecordRepository {
 
     private final RecordJpaRepository recordJpaRepository;

@@ -18,3 +18,23 @@
 1694312089320|0|statement|connection 48|url jdbc:h2:mem:e2575d49-0754-422f-9776-87779bf670d4|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
 1694312089321|0|statement|connection 48|url jdbc:h2:mem:e2575d49-0754-422f-9776-87779bf670d4|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
 1694312089321|0|statement|connection 48|url jdbc:h2:mem:e2575d49-0754-422f-9776-87779bf670d4|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1694322829287|0|statement|connection 48|url jdbc:h2:mem:1ef8aa09-bf42-4935-bbe0-5e7703c3cd63|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1694322829288|0|statement|connection 48|url jdbc:h2:mem:1ef8aa09-bf42-4935-bbe0-5e7703c3cd63|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
+1694322829289|0|statement|connection 48|url jdbc:h2:mem:1ef8aa09-bf42-4935-bbe0-5e7703c3cd63|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
+1694322829289|0|statement|connection 48|url jdbc:h2:mem:1ef8aa09-bf42-4935-bbe0-5e7703c3cd63|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1694322837665|0|statement|connection 48|url jdbc:h2:mem:d37fffbd-1f78-4cca-abaf-3f4b9d0f0e86|drop table if exists member CASCADE |drop table if exists member CASCADE 
+1694322837665|0|statement|connection 48|url jdbc:h2:mem:d37fffbd-1f78-4cca-abaf-3f4b9d0f0e86|drop table if exists record CASCADE |drop table if exists record CASCADE 
+1694322837665|0|statement|connection 48|url jdbc:h2:mem:d37fffbd-1f78-4cca-abaf-3f4b9d0f0e86|drop table if exists student CASCADE |drop table if exists student CASCADE 
+1694322837665|0|statement|connection 48|url jdbc:h2:mem:d37fffbd-1f78-4cca-abaf-3f4b9d0f0e86|drop sequence if exists hibernate_sequence|drop sequence if exists hibernate_sequence
+1694477617325|0|statement|connection 48|url jdbc:h2:mem:03dd6920-c2d3-4849-b2c6-7127618acd88|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1694477617326|0|statement|connection 48|url jdbc:h2:mem:03dd6920-c2d3-4849-b2c6-7127618acd88|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
+1694477617326|0|statement|connection 48|url jdbc:h2:mem:03dd6920-c2d3-4849-b2c6-7127618acd88|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
+1694477617327|0|statement|connection 48|url jdbc:h2:mem:03dd6920-c2d3-4849-b2c6-7127618acd88|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1694478603105|0|statement|connection 48|url jdbc:h2:mem:e3f52480-0f03-453e-81e7-a3ce6a915e5a|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1694478603106|0|statement|connection 48|url jdbc:h2:mem:e3f52480-0f03-453e-81e7-a3ce6a915e5a|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
+1694478603106|0|statement|connection 48|url jdbc:h2:mem:e3f52480-0f03-453e-81e7-a3ce6a915e5a|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
+1694478603106|0|statement|connection 48|url jdbc:h2:mem:e3f52480-0f03-453e-81e7-a3ce6a915e5a|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1694478879501|0|statement|connection 48|url jdbc:h2:mem:40972411-153f-4fd9-8962-59ca48183aae|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1694478879503|0|statement|connection 48|url jdbc:h2:mem:40972411-153f-4fd9-8962-59ca48183aae|     drop table if exists record CASCADE |     drop table if exists record CASCADE 
+1694478879503|0|statement|connection 48|url jdbc:h2:mem:40972411-153f-4fd9-8962-59ca48183aae|     drop table if exists student CASCADE |     drop table if exists student CASCADE 
+1694478879503|0|statement|connection 48|url jdbc:h2:mem:40972411-153f-4fd9-8962-59ca48183aae|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
