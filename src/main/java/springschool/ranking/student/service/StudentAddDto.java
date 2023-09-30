@@ -21,5 +21,4 @@ public class StudentAddDto {
     private Long teacherId;
     @NotBlank
     private String teacherName;
-
 }

@@ -21,17 +21,6 @@ public class Member {
     @OneToMany(mappedBy = "teacher")
     private List<Student> students = new ArrayList<>();
 
-    /**
-     * 회원 가입 로직
-     */
-/*
-    public Member createMember(String userId, String password, String name) {
-        this.userId = userId;
-        this.password = password;
-        this.name = name;
-        return this;
-    }
-*/
     public static Member createMember(String userId, String password, String name) {
         Member member = new Member();
         member.userId = userId;

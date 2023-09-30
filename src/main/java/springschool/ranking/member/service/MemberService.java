@@ -3,7 +3,6 @@ package springschool.ranking.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springschool.ranking.aop.Retry;
 import springschool.ranking.commondto.StudentCheckElementDto;
 import springschool.ranking.commondto.StudentCheckListDto;
 import springschool.ranking.member.domain.Member;
@@ -48,14 +47,9 @@ public class MemberService {
         memberRepository.deleteMember(memberId);
     }
 
-    /**
-     * 5번 로그인 시도 후 실패 시 NoSuchUserIdException 발생
-     */
-//    @Retry(5) // 컨트롤러에서 호출해야 한다.
     public Member login(String userId, String password) {
         return memberRepository.findByUserId(userId)
                 .filter(m -> m.getPassword().equals(password))
-//                .orElseThrow(NoSuchUserIdException::new);
                 .orElse(null);
     }
 

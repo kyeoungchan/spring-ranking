@@ -56,8 +56,4 @@ public class Student {
         this.phoneNumber = phoneNumber;
         matchTeacher(this, teacher);
     }
-
-    /**
-     * 학생 학기 정보를 수정하기 위한 로직
-     */
 }

@@ -22,5 +22,4 @@ public class StudentUpdateDto {
 
     @NotNull
     private String teacherName;
-
 }

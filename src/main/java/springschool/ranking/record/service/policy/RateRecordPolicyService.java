@@ -3,7 +3,6 @@ package springschool.ranking.record.service.policy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import springschool.ranking.Semester;
 import springschool.ranking.record.Policy;
 import springschool.ranking.record.domain.Record;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-//@Transactional
 public class RateRecordPolicyService implements RecordPolicyService {
 
     private final StudentRepository studentRepository;
